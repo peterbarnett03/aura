@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aura - Palindromic Rheumatism tracking app for managing symptoms, medications, and health insights. Currently in beta for iOS.">
+    <meta name="keywords" content="palindromic rheumatism, arthritis, health tracking, symptom management, medical app, beta">
+    <meta name="author" content="Peter Barnett">
+    <title>Aura - Palindromic Rheumatism Tracker (Beta)</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/app-icon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://peterbarnett03.github.io/aura/">
+    <meta property="og:title" content="Aura - Palindromic Rheumatism Tracker">
+    <meta property="og:description" content="Privacy-first health tracking app for Palindromic Rheumatism. Track symptoms, manage medications, and discover patterns with Apple Health integration.">
+    <meta property="og:image" content="https://peterbarnett03.github.io/aura/screenshots/photo1.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://peterbarnett03.github.io/aura/">
+    <meta property="twitter:title" content="Aura - Palindromic Rheumatism Tracker">
+    <meta property="twitter:description" content="Privacy-first health tracking app for Palindromic Rheumatism. Track symptoms, manage medications, and discover patterns with Apple Health integration.">
+    <meta property="twitter:image" content="https://peterbarnett03.github.io/aura/screenshots/photo1.png">
+    
+    <!-- PWA -->
+    <meta name="theme-color" content="#10B981">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background: #f9fafb;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .main-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .content-wrapper {
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        
+        .tagline {
+            font-size: 1.25rem;
+            color: #6B7280;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+        
+        .beta-badge {
+            display: inline-block;
+            background: #FEF3C7;
+            color: #D97706;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+        
+        .features {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #F8FAFC;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid #E2E8F0;
+        }
+        
+        .feature-icon {
+            font-size: 1.1em;
+        }
+        
+        .feature-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #475569;
+        }
+        
+        .description {
+            font-size: 1.125rem;
+            color: #4B5563;
+            margin-bottom: 28px;
+        }
+        
+        /* Screenshot Gallery */
+        .screenshot-gallery {
+            margin-bottom: 32px;
+        }
+        
+        .gallery-container {
+            position: relative;
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #E2E8F0;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .gallery-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+        
+        .gallery-subtitle {
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+        
+        .screenshots-container {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 4px 0 8px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .screenshots-container::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .screenshots-container::-webkit-scrollbar-track {
+            background: #F1F5F9;
+            border-radius: 2px;
+        }
+        
+        .screenshots-container::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 2px;
+        }
+        
+        .screenshot {
+            flex: 0 0 auto;
+            width: 120px;
+            height: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 2px solid #E2E8F0;
+        }
+        
+        .screenshot:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #10B981;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.2s ease;
+            text-align: center;
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+        }
+        
+        .download-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        
+        .download-btn:focus {
+            outline: 2px solid #10B981;
+            outline-offset: 2px;
+        }
+        
+        .download-icon {
+            font-size: 1.2em;
+        }
+        
+        .support-info {
+            background: #F3F4F6;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+        }
+        
+        .support-info a {
+            color: #10B981;
+            text-decoration: none;
+        }
+        
+        .support-info a:hover {
+            text-decoration: underline;
+        }
+        
+        .sidebar-btn {
+            background: white;
+            border: 2px solid #E5E7EB;
+            color: #374151;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        
+        .sidebar-btn:hover {
+            border-color: #10B981;
+            color: #10B981;
+            background: #F0FDF4;
+            transform: translateY(-1px);
+        }
+        
+        .sidebar-btn:focus {
+            outline: 2px solid #10B981;
+            outline-offset: 2px;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 32px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.2s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .image-modal-content {
+            background: transparent;
+            padding: 20px;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-image {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .close {
+            position: absolute;
+            top: 16px;
+            right: 24px;
+            color: #6B7280;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            line-height: 1;
+        }
+        
+        .close:hover {
+            color: #374151;
+            background: #F3F4F6;
+        }
+        
+        .close:focus {
+            outline: 2px solid #10B981;
+            outline-offset: 2px;
+        }
+        
+        .image-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-close:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal h2 {
+            color: #111827;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #E5E7EB;
+        }
+        
+        .modal h3 {
+            color: #374151;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 24px 0 12px;
+        }
+        
+        .modal p {
+            margin-bottom: 16px;
+            color: #4B5563;
+        }
+        
+        .modal ul {
+            margin: 16px 0;
+            padding-left: 20px;
+        }
+        
+        .modal li {
+            margin-bottom: 8px;
+            color: #4B5563;
+        }
+        
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                text-align: center;
+            }
+            
+            .main-content {
+                padding: 32px 24px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+            
+            .features {
+                justify-content: center;
+                gap: 12px;
+            }
+            
+            .feature {
+                font-size: 0.85rem;
+            }
+            
+            .screenshot {
+                width: 100px;
+                height: 180px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                padding: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .screenshot {
+                width: 90px;
+                height: 160px;
+            }
+            
+            .screenshots-container {
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="logo">
+                    <img src="assets/app-icon.png" alt="Aura app icon">
+                </div>
+                <h1>Aura</h1>
+                <p class="tagline">Palindromic Rheumatism Tracker</p>
+                <div class="beta-badge">Beta Version</div>
+                
+                <div class="features">
+                    <div class="feature">
+                        <span class="feature-icon">📊</span>
+                        <span class="feature-text">Pattern Recognition</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🔒</span>
+                        <span class="feature-text">Privacy First</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">❤️</span>
+                        <span class="feature-text">Apple Health</span>
+                    </div>
+                </div>
+                
+                <p class="description">Track symptoms, manage medications, and gain insights into your Palindromic Rheumatism patterns. Deep Apple Health integration with privacy-first design.</p>
+                
+                <div class="screenshot-gallery">
+                    <div class="gallery-container">
+                        <div class="gallery-header">
+                            <div class="gallery-title">App Screenshots</div>
+                            <div class="gallery-subtitle">Click to enlarge • Scroll to see more</div>
+                        </div>
+                        <div class="screenshots-container">
+                            <div class="screenshot" onclick="openImageModal('screenshots/photo1.png')">
+                                <img src="screenshots/photo1.png" alt="Aura app screenshot 1">
+                            </div>
+                            <div class="screenshot" onclick="openImageModal('screenshots/photo2.png')">
+                                <img src="screenshots/photo2.png" alt="Aura app screenshot 2">
+                            </div>
+                            <div class="screenshot" onclick="openImageModal('screenshots/photo3.png')">
+                                <img src="screenshots/photo3.png" alt="Aura app screenshot 3">
+                            </div>
+                            <div class="screenshot" onclick="openImageModal('screenshots/photo4.png')">
+                                <img src="screenshots/photo4.png" alt="Aura app screenshot 4">
+                            </div>
+                            <div class="screenshot" onclick="openImageModal('screenshots/photo5.png')">
+                                <img src="screenshots/photo5.png" alt="Aura app screenshot 5">
+                            </div>
+                            <div class="screenshot" onclick="openImageModal('screenshots/photo6.png')">
+                                <img src="screenshots/photo6.png" alt="Aura app screenshot 6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="https://testflight.apple.com/join/ABBHXqG4" target="_blank" rel="noopener noreferrer" class="download-btn">
+                    <span class="download-icon">📱</span>
+                    Join Beta on TestFlight
+                </a>
+            </div>
+            
+            <div class="sidebar">
+                <a href="https://github.com/peterbarnett03/aura/issues/new" target="_blank" rel="noopener noreferrer" class="sidebar-btn" style="text-decoration: none; display: block;">Create a Ticket</a>
+                <button class="sidebar-btn" onclick="openModal('privacyModal')">Privacy Policy</button>
+                <button class="sidebar-btn" onclick="openModal('termsModal')">Terms of Service</button>
+                <div class="support-info">
+                    <p><strong>Support:</strong><br>
+                    <a href="https://github.com/peterbarnett03/aura/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a></p>
+                    <p><strong>Developer:</strong><br>Peter Barnett</p>
+                    <p><strong>System Requirements:</strong><br>iOS 14.0+</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="image-modal-content">
+            <button class="close image-close" onclick="closeImageModal()" aria-label="Close image">&times;</button>
+            <img id="modalImage" class="modal-image" src="" alt="Screenshot">
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <button class="close" onclick="closeModal('privacyModal')" aria-label="Close privacy policy">&times;</button>
+            <h2>Privacy Policy</h2>
+            <p><strong>Last Updated:</strong> August 5, 2025</p>
+            
+            <h3>1. Information We Collect</h3>
+            <p>Aura collects and processes the following types of information:</p>
+            <ul>
+                <li><strong>Health Data:</strong> Symptom logs, pain levels, medication records, and flare episodes that you manually enter</li>
+                <li><strong>Apple Health Data:</strong> With your explicit permission, activity data, heart rate, sleep patterns, and other health metrics</li>
+                <li><strong>Usage Data:</strong> App usage patterns and feature interactions to improve user experience</li>
+                <li><strong>Account Information:</strong> Name, email address, and basic profile information for account management</li>
+            </ul>
+            
+            <h3>2. How We Use Your Information</h3>
+            <ul>
+                <li>Provide personalized health insights and pattern recognition</li>
+                <li>Track medication adherence and effectiveness</li>
+                <li>Correlate health metrics with symptom patterns</li>
+                <li>Generate health reports for sharing with healthcare providers</li>
+                <li>Improve app functionality and user experience</li>
+            </ul>
+            
+            <h3>3. Data Storage and Security</h3>
+            <p>Your health data is stored locally on your device using encrypted databases. Cloud synchronization is optional and uses industry-standard encryption. We employ:</p>
+            <ul>
+                <li>End-to-end encryption for all data transmission</li>
+                <li>Local-first data storage with optional cloud backup</li>
+                <li>Regular security audits and updates</li>
+                <li>No third-party data sharing without explicit consent</li>
+            </ul>
+            
+            <h3>4. Community Data Sharing</h3>
+            <p>Community insights are entirely optional. If you choose to participate:</p>
+            <ul>
+                <li>All data is cryptographically anonymized before sharing</li>
+                <li>No personally identifiable information is included</li>
+                <li>You can opt-out at any time</li>
+                <li>Data is aggregated with other users for research purposes only</li>
+            </ul>
+            
+            <h3>5. Third-Party Services</h3>
+            <p>Aura integrates with the following services:</p>
+            <ul>
+                <li><strong>Apple Health:</strong> For importing health and activity data (with permission)</li>
+                <li><strong>Supabase:</strong> For optional cloud synchronization and community features</li>
+                <li><strong>PubMed Central:</strong> For accessing medical research articles</li>
+                <li><strong>Weather API:</strong> For environmental trigger correlation</li>
+            </ul>
+            
+            <h3>6. Your Rights</h3>
+            <p>Under GDPR and other privacy regulations, you have the right to:</p>
+            <ul>
+                <li>Access all data we have about you</li>
+                <li>Correct inaccurate personal information</li>
+                <li>Delete your account and all associated data</li>
+                <li>Export your data in a portable format</li>
+                <li>Withdraw consent for data processing at any time</li>
+            </ul>
+            
+            <h3>7. Medical Disclaimer</h3>
+            <p><strong>Important:</strong> Aura is designed for informational and tracking purposes only. It is not intended to diagnose any medical condition, provide medical advice, or replace professional medical consultation. Always consult with qualified healthcare professionals regarding your health conditions.</p>
+            
+            <h3>8. Contact Information</h3>
+            <p>For privacy-related questions, please open an issue on our <a href="https://github.com/peterbarnett03/aura/issues/new" target="_blank" rel="noopener noreferrer">GitHub repository</a>.</p>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <button class="close" onclick="closeModal('termsModal')" aria-label="Close terms of service">&times;</button>
+            <h2>Terms of Service</h2>
+            <p><strong>Last Updated:</strong> August 5, 2025</p>
+            
+            <h3>1. Beta Software Agreement</h3>
+            <p>Aura is currently in beta testing. By using this software, you acknowledge that:</p>
+            <ul>
+                <li>The software may contain bugs or incomplete features</li>
+                <li>Data backup is your responsibility</li>
+                <li>Features may change or be removed without notice</li>
+                <li>No warranty is provided for beta software</li>
+            </ul>
+            
+            <h3>2. Medical Disclaimer</h3>
+            <p><strong>Important:</strong> Aura is designed for informational and tracking purposes only. It is not intended to:</p>
+            <ul>
+                <li>Diagnose any medical condition</li>
+                <li>Provide medical advice or treatment recommendations</li>
+                <li>Replace professional medical consultation</li>
+                <li>Be used for medical emergencies</li>
+            </ul>
+            
+            <h3>3. User Responsibilities</h3>
+            <ul>
+                <li>Provide accurate health information</li>
+                <li>Use the app responsibly and in accordance with these terms</li>
+                <li>Maintain the confidentiality of your account credentials</li>
+                <li>Report any security vulnerabilities or bugs</li>
+            </ul>
+            
+            <h3>4. Limitation of Liability</h3>
+            <p>To the fullest extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of Aura.</p>
+            
+            <h3>5. System Requirements</h3>
+            <ul>
+                <li><strong>iOS:</strong> Requires iOS 14.0 or later</li>
+                <li><strong>Storage:</strong> Approximately 50MB of free space</li>
+                <li><strong>Permissions:</strong> Optional access to Apple Health and Notifications</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let currentModal = null;
+        let lastFocusedElement = null;
+        
+        function openModal(modalId) {
+            try {
+                const modal = document.getElementById(modalId);
+                if (!modal) return;
+                
+                lastFocusedElement = document.activeElement;
+                modal.style.display = "block";
+                currentModal = modalId;
+                
+                const closeButton = modal.querySelector('.close');
+                if (closeButton) {
+                    setTimeout(() => closeButton.focus(), 100);
+                }
+                
+                document.body.style.overflow = 'hidden';
+            } catch (error) {
+                console.error('Error opening modal:', error);
+            }
+        }
+        
+        function closeModal(modalId) {
+            try {
+                const modal = document.getElementById(modalId);
+                if (!modal) return;
+                
+                modal.style.display = "none";
+                currentModal = null;
+                document.body.style.overflow = '';
+                
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                    lastFocusedElement = null;
+                }
+            } catch (error) {
+                console.error('Error closing modal:', error);
+            }
+        }
+        
+        function openImageModal(imageSrc) {
+            try {
+                const modal = document.getElementById('imageModal');
+                const modalImage = document.getElementById('modalImage');
+                
+                lastFocusedElement = document.activeElement;
+                modalImage.src = imageSrc;
+                modal.style.display = "block";
+                currentModal = 'imageModal';
+                document.body.style.overflow = 'hidden';
+            } catch (error) {
+                console.error('Error opening image modal:', error);
+            }
+        }
+        
+        function closeImageModal() {
+            closeModal('imageModal');
+        }
+        
+        // Enhanced modal event handling
+        document.addEventListener('DOMContentLoaded', function() {
+            // ESC key support
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && currentModal) {
+                    if (currentModal === 'imageModal') {
+                        closeImageModal();
+                    } else {
+                        closeModal(currentModal);
+                    }
+                }
+            });
+            
+            // Click outside to close
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    if (event.target.id === 'imageModal') {
+                        closeImageModal();
+                    } else {
+                        closeModal(event.target.id);
+                    }
+                }
+            });
+            
+            // Focus trapping within modals
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Tab' && currentModal) {
+                    const modal = document.getElementById(currentModal);
+                    const focusableElements = modal.querySelectorAll(
+                        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                    );
+                    
+                    if (focusableElements.length === 0) return;
+                    
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+                    
+                    if (event.shiftKey) {
+                        if (document.activeElement === firstElement) {
+                            event.preventDefault();
+                            lastElement.focus();
+                        }
+                    } else {
+                        if (document.activeElement === lastElement) {
+                            event.preventDefault();
+                            firstElement.focus();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
