@@ -45,11 +45,11 @@
         }
         
         .main-container {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
         }
         
         .content-wrapper {
@@ -64,7 +64,7 @@
         .main-content {
             background: white;
             border-radius: 16px;
-            padding: 40px;
+            padding: 28px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
@@ -75,10 +75,10 @@
         }
         
         .logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            margin-bottom: 24px;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            margin-bottom: 16px;
             overflow: hidden;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
         }
@@ -90,99 +90,102 @@
         }
         
         h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: #111827;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            line-height: 1.1;
         }
         
         .tagline {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             color: #6B7280;
             font-weight: 400;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
+            line-height: 1.3;
         }
         
         .beta-badge {
             display: inline-block;
             background: #FEF3C7;
             color: #D97706;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.875rem;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
             font-weight: 500;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
         
         .features {
             display: flex;
-            gap: 20px;
-            margin-bottom: 24px;
+            gap: 12px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
         }
         
         .feature {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             background: #F8FAFC;
-            padding: 8px 14px;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
             border: 1px solid #E2E8F0;
         }
         
         .feature-icon {
-            font-size: 1.1em;
+            font-size: 1em;
         }
         
         .feature-text {
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-weight: 500;
             color: #475569;
         }
         
         .description {
-            font-size: 1.125rem;
+            font-size: 1rem;
             color: #4B5563;
-            margin-bottom: 28px;
+            margin-bottom: 20px;
+            line-height: 1.5;
         }
         
         /* Screenshot Gallery */
         .screenshot-gallery {
-            margin-bottom: 32px;
+            margin-bottom: 20px;
         }
         
         .gallery-container {
             position: relative;
             background: #F8FAFC;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 16px;
             border: 1px solid #E2E8F0;
         }
         
         .gallery-header {
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         
         .gallery-title {
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: #374151;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         
         .gallery-subtitle {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #6B7280;
         }
         
         .screenshots-container {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             overflow-x: auto;
             scroll-behavior: smooth;
-            padding: 4px 0 8px 0;
+            padding: 2px 0 6px 0;
             -webkit-overflow-scrolling: touch;
         }
         
@@ -202,14 +205,14 @@
         
         .screenshot {
             flex: 0 0 auto;
-            width: 120px;
-            height: 220px;
-            border-radius: 12px;
+            width: 90px;
+            height: 160px;
+            border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 2px solid #E2E8F0;
+            border: 1px solid #E2E8F0;
         }
         
         .screenshot:hover {
@@ -230,11 +233,11 @@
             gap: 8px;
             background: #10B981;
             color: white;
-            padding: 16px 32px;
+            padding: 14px 28px;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 1.125rem;
+            font-size: 1rem;
             transition: all 0.2s ease;
             text-align: center;
             box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
@@ -441,11 +444,11 @@
             }
             
             .main-content {
-                padding: 32px 24px;
+                padding: 24px 20px;
             }
             
             h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
             
             .sidebar {
@@ -462,8 +465,8 @@
             }
             
             .screenshot {
-                width: 100px;
-                height: 180px;
+                width: 80px;
+                height: 140px;
             }
             
             .modal-content {
@@ -475,8 +478,8 @@
         
         @media (max-width: 480px) {
             .screenshot {
-                width: 90px;
-                height: 160px;
+                width: 70px;
+                height: 125px;
             }
             
             .screenshots-container {
@@ -596,28 +599,22 @@
             </ul>
             
             <h3>3. Data Storage and Security</h3>
-            <p>Your health data is stored locally on your device using encrypted databases. Cloud synchronization is optional and uses industry-standard encryption. We employ:</p>
-            <ul>
-                <li>End-to-end encryption for all data transmission</li>
-                <li>Local-first data storage with optional cloud backup</li>
-                <li>Regular security audits and updates</li>
-                <li>No third-party data sharing without explicit consent</li>
-            </ul>
+            <p>Your health data is stored locally on your device and is not uploaded to any servers.</p>
             
             <h3>4. Community Data Sharing</h3>
-            <p>Community insights are entirely optional. If you choose to participate:</p>
+            <p>Community insights are entirely optional. This feature may be included in the future. If you choose to participate:</p>
             <ul>
-                <li>All data is cryptographically anonymized before sharing</li>
+                <li>All data is anonymized before sharing</li>
                 <li>No personally identifiable information is included</li>
                 <li>You can opt-out at any time</li>
                 <li>Data is aggregated with other users for research purposes only</li>
+                <li>You can delete your data</li>
             </ul>
             
             <h3>5. Third-Party Services</h3>
             <p>Aura integrates with the following services:</p>
             <ul>
                 <li><strong>Apple Health:</strong> For importing health and activity data (with permission)</li>
-                <li><strong>Supabase:</strong> For optional cloud synchronization and community features</li>
                 <li><strong>PubMed Central:</strong> For accessing medical research articles</li>
                 <li><strong>Weather API:</strong> For environmental trigger correlation</li>
             </ul>
