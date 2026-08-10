@@ -1,16 +1,20 @@
 /* Aura — companion site
  *
- * Three colours and one accent. The accent is the app's own teal, taken from Core/Design/
- * AuraTheme.swift, so someone arriving from the App Store listing recognises the thing they are
- * about to install. It is darkened a little from the in-app value: #4A90A4 clears 3:1 against this
- * page ground but not 4.5:1, and link text has to clear 4.5:1.
+ * The accent is the app's own teal, taken from Core/Design/AuraTheme.swift, so someone arriving
+ * from the App Store listing recognises the thing they are about to install. It is darkened a
+ * little from the in-app value: #4A90A4 clears 3:1 against this page ground but not 4.5:1, and
+ * link text has to clear 4.5:1.
  *
- * The neutral is warmed very slightly, matching the app's off-white rather than a pure grey —
- * beside teal a pure grey reads cold, and this is an app for people having a rough time.
+ * The two warm hues are lifted off the app icon's ring rather than invented. They appear in
+ * exactly two places, the glow behind the hero phone and the episode strip, which is enough to
+ * tie the page to the icon without turning a page about a painful condition into a sunset.
+ *
+ * The neutral is warmed very slightly, matching the app's off-white rather than a pure grey.
+ * Beside teal a pure grey reads cold, and this is an app for people having a rough time.
  *
  * Set in system-ui on purpose. On an iPhone that resolves to SF, which is the face the app itself
- * is set in — a webfont would make the page look less like the product, not more, and would cost
- * a round trip on a page whose job is partly to be readable on a bad connection.
+ * is set in. A webfont would make the page look less like the product, not more, and would cost a
+ * round trip on a page whose job is partly to be readable on a bad connection.
  *
  * The screenshots are light in both themes. Aura is a light product, they sit comfortably on
  * either ground, and carrying a dark set would double the assets to serve a case nobody asked for.
@@ -20,23 +24,31 @@
   color-scheme: light dark;
 
   --bg: #FAF9F7;
-  --surface: #F0EFEC;
-  --fg: #222D34;
+  --surface: #F2F1ED;
+  --fg: #202A31;
   --fg-2: #63706F;
   --accent: #2F7183;
+  --ember: #E0733F;
+  --rose: #E2607E;
   --line: rgba(20, 40, 45, 0.10);
-  --shot-shadow: rgba(26, 44, 50, 0.20);
+  --line-2: rgba(20, 40, 45, 0.16);
+  --cast: rgba(26, 44, 50, 0.24);
+  --glow: 0.5;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #121417;
-    --surface: #1C1F23;
+    --bg: #101215;
+    --surface: #191C20;
     --fg: #ECEFF1;
-    --fg-2: #A3AFB4;
+    --fg-2: #A2AEB3;
     --accent: #6FB6C8;
+    --ember: #F08A55;
+    --rose: #F0788F;
     --line: rgba(255, 255, 255, 0.10);
-    --shot-shadow: rgba(0, 0, 0, 0.55);
+    --line-2: rgba(255, 255, 255, 0.18);
+    --cast: rgba(0, 0, 0, 0.6);
+    --glow: 0.4;
   }
 }
 
@@ -55,11 +67,12 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 17px;
   line-height: 1.6;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-.wrap { width: 100%; max-width: 64rem; margin: 0 auto; padding: 0 24px; }
+.wrap { width: 100%; max-width: 68rem; margin: 0 auto; padding: 0 24px; }
 .narrow { max-width: 42rem; }
 
 a { color: var(--accent); text-underline-offset: 3px; }
@@ -67,6 +80,16 @@ a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 3px;
+}
+
+/* The app icon, wherever it appears. It is a pale glass icon, so on a pale page it needs the
+   same hairline and lift iOS gives it on the home screen or it dissolves into the ground. */
+.app-icon {
+  display: block;
+  border-radius: 23.5%;
+  box-shadow: 0 1px 2px rgba(20, 30, 35, 0.16),
+              0 6px 18px -8px rgba(20, 30, 35, 0.32),
+              0 0 0 0.5px rgba(20, 30, 35, 0.07);
 }
 
 /* ---- Header ---------------------------------------------------------- */
@@ -77,14 +100,14 @@ a:focus-visible {
 .wordmark {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 12px;
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.3em;
   color: var(--fg);
   text-decoration: none;
 }
-.wordmark img { width: 26px; height: 26px; border-radius: 7px; display: block; }
+.wordmark .app-icon { width: 27px; height: 27px; }
 
 .site-head nav { margin-left: auto; display: flex; gap: 22px; }
 .site-head nav a {
@@ -96,37 +119,59 @@ a:focus-visible {
 .site-head nav a:hover,
 .site-head nav a[aria-current="page"] { color: var(--fg); }
 
-/* ---- Hero ------------------------------------------------------------ */
+/* ---- Type ------------------------------------------------------------ */
 
-.hero { padding: 92px 0 24px; }
-.hero-grid { display: grid; gap: 56px; align-items: center; }
-@media (min-width: 860px) {
-  .hero-grid { grid-template-columns: 1fr 330px; gap: 72px; }
-}
-
-.hero h1 {
-  font-size: clamp(2.4rem, 6.1vw, 3.7rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.06;
-  margin: 0 0 22px;
-  text-wrap: balance;
-}
-.hero .lede {
-  font-size: clamp(1.08rem, 2.2vw, 1.26rem);
-  line-height: 1.5;
-  color: var(--fg-2);
-  margin: 0 0 34px;
-  max-width: 32rem;
-  text-wrap: pretty;
-}
-
-.eyebrow {
+.label {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.26em;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
   color: var(--accent);
-  margin: 0 0 20px;
+  margin: 0 0 18px;
+}
+
+h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+h3 { font-size: 1.02rem; font-weight: 650; margin: 0 0 4px; letter-spacing: -0.012em; }
+p { margin: 0 0 1.1rem; text-wrap: pretty; }
+p:last-child { margin-bottom: 0; }
+.muted { color: var(--fg-2); }
+
+/* ---- Hero ------------------------------------------------------------ */
+
+.hero { position: relative; padding: 72px 0 40px; }
+.hero-grid { display: grid; gap: 60px; align-items: center; }
+@media (min-width: 900px) {
+  .hero { padding: 88px 0 56px; }
+  .hero-grid { grid-template-columns: minmax(0, 1fr) 340px; gap: 64px; }
+}
+
+.hero .app-icon { width: 62px; height: 62px; margin-bottom: 26px; }
+
+.hero h1 {
+  font-size: clamp(2.45rem, 6.2vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.03;
+  margin: 0 0 24px;
+  text-wrap: balance;
+}
+/* The second clause of the headline carries the idea; the first carries the search term. */
+.hero h1 em { font-style: normal; color: var(--fg-2); }
+
+.hero .lede {
+  font-size: clamp(1.08rem, 2.1vw, 1.23rem);
+  line-height: 1.52;
+  color: var(--fg-2);
+  margin: 0 0 32px;
+  max-width: 33rem;
+  text-wrap: pretty;
 }
 
 .status {
@@ -136,67 +181,256 @@ a:focus-visible {
   font-size: 15px;
   font-weight: 500;
   color: var(--fg-2);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-2);
   border-radius: 999px;
   padding: 11px 20px;
 }
 .status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 
-/* ---- Screenshots ----------------------------------------------------- */
+/* The glow is the icon's own ring, blown up and put behind the phone. It is the only decorative
+   element on the page, so it stays behind everything and never touches text.
+ *
+ * The wrapper is what stops it: it is wider than the hero on purpose, and an absolutely
+ * positioned bleed like that widens the document on a narrow screen. `overflow-x: hidden` on the
+ * body hides the result but still leaves the page scrollable sideways in some browsers, so the
+ * clip happens here instead, where it cannot be argued with. */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-glow span {
+  position: absolute;
+  width: 42rem;
+  aspect-ratio: 1;
+  right: -7rem;
+  top: -2rem;
+  opacity: var(--glow);
+  background:
+    radial-gradient(closest-side, var(--ember), transparent 72%) 32% 30% / 64% 64% no-repeat,
+    radial-gradient(closest-side, var(--rose), transparent 70%) 64% 56% / 60% 60% no-repeat,
+    radial-gradient(closest-side, var(--accent), transparent 70%) 42% 76% / 54% 54% no-repeat;
+  filter: blur(34px);
+}
+/* Stacked, the phone moves below the copy, so the glow follows it down. Left where it was it
+   would sit behind the headline, and a headline over a wash of orange is unreadable. */
+@media (max-width: 899px) {
+  .hero-glow span {
+    width: 30rem;
+    right: -9rem;
+    top: auto;
+    bottom: -5rem;
+    opacity: calc(var(--glow) * 0.72);
+  }
+}
 
-/* A rounded frame and a shadow, and nothing else. A drawn phone bezel would be chrome around
-   chrome — the capture already contains the status bar and the app's own corners. */
-.shot {
-  display: block;
+/* ---- The iPhone ------------------------------------------------------ */
+
+/* Drawn rather than photographed. A tilted render is a 300 KB image that only fits one page
+   width and one theme; this one reflows, stays sharp on any display, and the screenshot inside
+   it is the app's own pixels at 2x, untouched.
+ *
+ * Proportions are the iPhone 16 Pro Max's, which is the device the captures came from: the body
+ * is 77.6mm across with a 71.6mm screen, so the rail is 3.7% of the width on every side, and the
+ * corner radius is 13.5% horizontally against 6.4% vertically. */
+.phone {
+  --ry: -17deg;                 /* turn */
+  --rx: 5deg;                   /* tip back */
+  --rz: 1.4deg;                 /* the hand is never quite level */
+  --depth: 15px;
+  position: relative;
   width: 100%;
-  height: auto;
-  border-radius: 26px;
-  border: 1px solid var(--line);
-  box-shadow: 0 24px 60px -24px var(--shot-shadow);
+  max-width: 340px;
+  perspective: 1500px;
+  perspective-origin: 50% 42%;
+}
+.phone-body {
+  position: relative;
+  padding: 3.7%;
+  border-radius: 13.5% / 6.4%;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--ry)) rotateX(var(--rx)) rotateZ(var(--rz));
+  background:
+    linear-gradient(148deg,
+      #E9E6E1 0%, #A6A29B 11%, #DBD7D0 23%, #7C7872 42%,
+      #CFCBC4 57%, #86827C 74%, #D9D5CE 88%, #A8A49D 100%);
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.18),
+    0 40px 70px -34px var(--cast),
+    0 90px 90px -60px var(--cast);
 }
 
-.gallery { padding: 88px 0 32px; }
-.gallery-grid {
-  display: grid;
-  gap: 44px 32px;
-  grid-template-columns: 1fr;
-  margin-top: 44px;
+/* Three plates stacked behind the front face give the body a side wall when it turns. One plate
+   alone leaves a hollow you can see straight through at this angle. */
+.phone-edge {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform: translateZ(var(--z));
+  background: linear-gradient(90deg, #5F5C57, #3B3936 55%, #6B6862);
 }
-@media (min-width: 720px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
-.gallery figure { margin: 0; }
-.gallery figcaption {
-  margin-top: 18px;
+
+.phone-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10.6% / 4.9%;
+  background: #05070A;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.55);
+}
+.phone-screen img { display: block; width: 100%; height: auto; }
+
+.phone-island {
+  position: absolute;
+  top: 1.15%;
+  left: 50%;
+  width: 28.4%;
+  aspect-ratio: 125 / 36;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #05070A;
+}
+
+/* One soft band across the glass, at the angle the body is turned. Kept under 20% alpha: a
+   convincing reflection on a screenshot is one you have to look for. */
+.phone-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(104deg,
+    rgba(255, 255, 255, 0.30) 0%,
+    rgba(255, 255, 255, 0.09) 15%,
+    rgba(255, 255, 255, 0) 31%,
+    rgba(255, 255, 255, 0) 63%,
+    rgba(255, 255, 255, 0.11) 76%,
+    rgba(255, 255, 255, 0) 90%);
+}
+
+.phone-button {
+  position: absolute;
+  width: 0.9%;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #8E8A84, #56534E);
+}
+.phone-button.left  { left: -0.5%; }
+.phone-button.right { right: -0.5%; }
+
+/* The tilt is a flourish, and a flourish that costs legibility on a 390px screen is not worth
+   keeping. Below the breakpoint the phone straightens up. */
+@media (max-width: 899px) {
+  .phone { --ry: -9deg; --rx: 3deg; --rz: 0.8deg; --depth: 10px; margin: 0 auto; }
+}
+@media (max-width: 560px) {
+  .phone { --ry: -7deg; --rx: 2deg; --rz: 0.5deg; --depth: 8px; max-width: 300px; }
+}
+
+/* ---- The episode strip ----------------------------------------------- */
+
+/* The one graphic on the page that is not a screenshot. It is here because the shape of the
+   condition is the whole argument for the app existing, and that shape is hard to describe in a
+   sentence and obvious in a picture. Labelled as an illustration, because it is one. */
+.rhythm { padding: 30px 0 8px; }
+.rhythm-head { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 40px; }
+.rhythm-head h2 { flex: 1 1 18rem; margin: 0; }
+.rhythm-head p { flex: 1 1 22rem; color: var(--fg-2); margin: 0; font-size: 16px; }
+
+.rhythm-plot {
+  margin-top: 34px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 26px 0 14px;
+  overflow-x: auto;
+}
+.rhythm-plot svg { display: block; width: 100%; min-width: 520px; height: auto; }
+/* On a phone the strip scales down instead of scrolling. It is a shape, not a chart anyone
+   reads values off, and a sideways scroll nobody notices is worse than a shorter band. */
+@media (max-width: 620px) { .rhythm-plot svg { min-width: 0; } }
+
+.rhythm-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin: 14px 0 0;
+  font-size: 13.5px;
+  color: var(--fg-2);
+}
+
+/* ---- Feature rows ---------------------------------------------------- */
+
+/* Alternating rows rather than a grid of equal cards. Each screen here needs a paragraph to make
+   sense of it, and a three-across grid gives a paragraph nowhere to go. */
+.feature {
+  display: grid;
+  gap: 44px;
+  align-items: center;
+  padding: 74px 0;
+  border-bottom: 1px solid var(--line);
+}
+.feature:last-of-type { border-bottom: 0; }
+@media (min-width: 900px) {
+  .feature { grid-template-columns: minmax(0, 1fr) 330px; gap: 80px; padding: 96px 0; }
+  .feature.flip { grid-template-columns: 330px minmax(0, 1fr); }
+  .feature.flip .feature-text { order: 2; }
+  .feature.flip .phone { --ry: 15deg; --rz: -1.2deg; }
+}
+.feature-text p { color: var(--fg-2); font-size: 17px; max-width: 34rem; }
+.feature-text h2 { margin-bottom: 16px; }
+
+.feature-note {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
   font-size: 15px;
   color: var(--fg-2);
-  line-height: 1.5;
-}
-.gallery figcaption b {
-  display: block;
-  color: var(--fg);
-  font-weight: 650;
-  margin-bottom: 2px;
+  max-width: 34rem;
 }
 
-/* ---- Prose ----------------------------------------------------------- */
+/* ---- Does / doesn't -------------------------------------------------- */
 
-section { padding: 40px 0; }
+.claims { padding: 78px 0 24px; }
+.claims > .narrow { margin-bottom: 44px; }
+.claims-grid { display: grid; gap: 22px; }
+@media (min-width: 780px) { .claims-grid { grid-template-columns: 1fr 1fr; gap: 26px; } }
 
-h2 {
-  font-size: clamp(1.6rem, 3.4vw, 2.05rem);
-  font-weight: 750;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+.claims-col {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px 30px 30px;
+}
+.claims-col h3 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
   margin: 0 0 18px;
-  text-wrap: balance;
 }
-h3 { font-size: 1.02rem; font-weight: 650; margin: 0 0 4px; letter-spacing: -0.012em; }
-p { margin: 0 0 1.1rem; text-wrap: pretty; }
-p:last-child { margin-bottom: 0; }
-.muted { color: var(--fg-2); }
-
-.points { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 30px; }
-@media (min-width: 720px) { .points { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
-.points p { font-size: 15.5px; color: var(--fg-2); margin: 0; }
+.claims-col.no h3 { color: var(--fg-2); }
+.claims-col ul { list-style: none; margin: 0; padding: 0; }
+.claims-col li {
+  padding: 13px 0 13px 22px;
+  border-top: 1px solid var(--line);
+  font-size: 16px;
+  line-height: 1.45;
+  position: relative;
+}
+.claims-col li:first-child { border-top: 0; padding-top: 0; }
+.claims-col li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 21px;
+  width: 9px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+.claims-col li:first-child::before { top: 8px; }
+.claims-col.no li::before { background: var(--fg-2); opacity: 0.5; }
+.claims-col li b { font-weight: 650; }
 
 /* A quiet, factual note rather than a banner. Used for the medical disclaimer, which has to be
    present and easy to find but should not be the loudest thing on the page. */
@@ -205,7 +439,7 @@ p:last-child { margin-bottom: 0; }
   background: var(--surface);
   border-radius: 0 12px 12px 0;
   padding: 18px 22px;
-  margin: 8px 0 0;
+  margin: 40px 0 0;
   font-size: 15.5px;
   color: var(--fg-2);
 }
@@ -215,8 +449,8 @@ p:last-child { margin-bottom: 0; }
 .doc { padding: 72px 0 24px; }
 .doc h1 {
   font-size: clamp(2.1rem, 5vw, 2.7rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
+  font-weight: 750;
+  letter-spacing: -0.04em;
   margin: 0 0 12px;
 }
 .doc .lede { color: var(--fg-2); font-size: 1.1rem; margin: 0 0 38px; }
@@ -248,7 +482,7 @@ p:last-child { margin-bottom: 0; }
 /* ---- Footer ---------------------------------------------------------- */
 
 .site-foot {
-  margin-top: 96px;
+  margin-top: 88px;
   border-top: 1px solid var(--line);
   padding: 32px 0 72px;
   font-size: 15px;

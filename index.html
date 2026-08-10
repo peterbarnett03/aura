@@ -3,23 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aura — a tracker built for palindromic rheumatism</title>
+<title>Aura — a flare tracker built for palindromic rheumatism</title>
 <meta name="description" content="A flare tracker for iPhone built around how palindromic rheumatism actually behaves. No account, no backend, and nothing you log leaves your phone.">
-<meta name="theme-color" content="#121417" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#101215" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#FAF9F7" media="(prefers-color-scheme: light)">
 <meta property="og:title" content="Aura">
 <meta property="og:description" content="A flare tracker for iPhone built around how palindromic rheumatism actually behaves. No account, no backend, and nothing you log leaves your phone.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://peterbarnett03.github.io/aura/">
-<meta property="og:image" content="https://peterbarnett03.github.io/aura/shots/today@2x.webp">
-<link rel="icon" type="image/png" href="assets/app-icon.png">
+<meta property="og:image" content="https://peterbarnett03.github.io/aura/assets/og.jpg">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/icon-64.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="site-head">
   <div class="wrap">
-    <a class="wordmark" href="./"><img src="assets/app-icon.png" alt="" width="26" height="26">AURA</a>
+    <a class="wordmark" href="./"><img class="app-icon" src="assets/app-icon-256.webp" alt="" width="27" height="27">AURA</a>
     <nav>
       <a href="privacy.html">Privacy</a>
       <a href="support.html">Support</a>
@@ -30,111 +31,287 @@
 <main>
 
   <div class="wrap hero">
+    <div class="hero-glow" aria-hidden="true"><span></span></div>
     <div class="hero-grid">
       <div>
-        <p class="eyebrow">FOR IPHONE</p>
-        <h1>A tracker built for palindromic rheumatism.</h1>
+        <img class="app-icon" src="assets/app-icon-256.webp" alt="The Aura app icon" width="62" height="62">
+        <h1>Palindromic rheumatism, <em>tracked the way it behaves.</em></h1>
         <p class="lede">
-          Flares arrive, move between joints and resolve completely. Aura is built around that,
-          not around a chronic ache that stays put — so logging one takes under a minute, and
-          months of them add up to something you can show a rheumatologist.
+          Flares arrive, move between joints, and resolve completely. Aura is built around that
+          rather than around a constant ache, so logging one takes under a minute and months of
+          them add up to something you can show a rheumatologist.
         </p>
         <p class="status"><span class="dot"></span> Coming to the App Store</p>
       </div>
 
-      <picture>
-        <img class="shot"
-             src="shots/today.webp"
-             srcset="shots/today.webp 1x, shots/today@2x.webp 2x"
-             width="330" height="717"
-             alt="Aura's Today screen: an active flare in the right fingers and wrist at pain level 6 that started six hours ago, two of three medication doses taken, and a recent research paper on palindromic flares.">
-      </picture>
+      <div class="phone">
+        <div class="phone-body">
+          <span class="phone-edge" style="--z:-5px"></span>
+          <span class="phone-edge" style="--z:-10px"></span>
+          <span class="phone-edge" style="--z:-15px"></span>
+          <span class="phone-button left" style="top:19%;height:5.5%"></span>
+          <span class="phone-button left" style="top:27%;height:9%"></span>
+          <span class="phone-button left" style="top:38%;height:9%"></span>
+          <span class="phone-button right" style="top:31%;height:13%"></span>
+          <div class="phone-screen">
+            <img src="shots/today.webp"
+                 srcset="shots/today.webp 1x, shots/today@2x.webp 2x"
+                 width="360" height="782" fetchpriority="high"
+                 alt="Aura's Today screen: an active flare in the right fingers and wrist at pain level 6 that started six hours ago, two of three medication doses taken, and a recent research paper on palindromic flares.">
+            <span class="phone-island"></span>
+          </div>
+          <span class="phone-glare"></span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="wrap gallery">
-    <div class="narrow">
-      <h2>Counts you can check, not predictions</h2>
-      <p class="muted">
-        Nothing here forecasts a flare, because nothing can. What the app does instead is keep an
-        honest tally: which joints, how often, what you tagged alongside it, and what the weather
-        was doing on the days you were fine as well as the days you weren't.
+  <div class="wrap rhythm">
+    <div class="rhythm-head">
+      <h2>Episodes, not a straight line.</h2>
+      <p>
+        Twelve weeks of a flare log. Some last an afternoon, some last most of a week, and the
+        gaps between them are the part most trackers throw away.
       </p>
     </div>
 
-    <div class="gallery-grid">
-      <figure>
-        <img class="shot"
-             src="shots/medications.webp"
-             srcset="shots/medications.webp 1x, shots/medications@2x.webp 2x"
-             width="330" height="717" loading="lazy"
-             alt="The medications screen: two of three doses taken today, a schedule showing hydroxychloroquine at 8:04am and naproxen at 9:04am marked taken, and an evening dose still due.">
-        <figcaption><b>Doses, at the times you take them</b>Set each dose to when you actually take it, get a reminder when it's due, and stop trying to remember whether this morning happened.</figcaption>
-      </figure>
+    <div class="rhythm-plot">
+      <svg viewBox="0 0 1200 150" role="img"
+           aria-label="Twelve weeks plotted as a row of episodes of varying width and height, separated by long flat gaps, illustrating how palindromic flares recur and resolve.">
+        <defs>
+          <!-- Across the whole strip, not across each episode: user space, not bounding box. -->
+          <linearGradient id="episode" gradientUnits="userSpaceOnUse" x1="26" y1="0" x2="1174" y2="0">
+            <stop offset="0" stop-color="var(--ember)"/>
+            <stop offset="0.55" stop-color="var(--rose)"/>
+            <stop offset="1" stop-color="var(--accent)"/>
+          </linearGradient>
+        </defs>
 
-      <figure>
-        <img class="shot"
-             src="shots/weather.webp"
-             srcset="shots/weather.webp 1x, shots/weather@2x.webp 2x"
-             width="330" height="717" loading="lazy"
-             alt="A chart of flare rate by barometric pressure: flares on 2 of 18 low-pressure days, 4 of 34 normal, and 5 of 32 high, with a note that the rate looks similar across conditions.">
-        <figcaption><b>Weather, with a denominator</b>Aura records the weather every day, not just on flare days, so a percentage means something instead of describing your local climate.</figcaption>
-      </figure>
+        <g fill="url(#episode)" fill-opacity="0.22" stroke="url(#episode)" stroke-width="1.5">
+          <path d="M67.0 118.0 Q73.8 25.2 80.7 118.0Z"/>
+          <path d="M149.0 118.0 Q162.7 -9.2 176.3 118.0Z"/>
+          <path d="M231.0 118.0 Q237.8 42.4 244.7 118.0Z"/>
+          <path d="M381.3 118.0 Q401.8 -26.4 422.3 118.0Z"/>
+          <path d="M449.7 118.0 Q456.5 8.0 463.3 118.0Z"/>
+          <path d="M572.7 118.0 Q586.3 -9.2 600.0 118.0Z"/>
+          <path d="M682.0 118.0 Q688.8 59.6 695.7 118.0Z"/>
+          <path d="M777.7 118.0 Q805.0 -43.6 832.3 118.0Z"/>
+          <path d="M887.0 118.0 Q893.8 25.2 900.7 118.0Z"/>
+          <path d="M996.3 118.0 Q1010.0 -9.2 1023.7 118.0Z"/>
+          <path d="M1105.7 118.0 Q1112.5 8.0 1119.3 118.0Z"/>
+        </g>
 
-      <figure>
-        <img class="shot"
-             src="shots/patterns.webp"
-             srcset="shots/patterns.webp 1x, shots/patterns@2x.webp 2x"
-             width="330" height="717" loading="lazy"
-             alt="Joint and trigger rankings: right wrist in 4 of 11 flares, left knee in 2, and stress the most tagged trigger at 5 of 11 flares.">
-        <figcaption><b>What keeps coming up</b>Joints and triggers ranked by how often you tagged them — and held back entirely until there are enough flares for the number to mean anything.</figcaption>
-      </figure>
+        <line x1="26" y1="118" x2="1174" y2="118" stroke="currentColor" stroke-opacity="0.35"/>
+        <g stroke="currentColor" stroke-opacity="0.2">
+          <line x1="26.0" y1="118" x2="26.0" y2="125"/>
+          <line x1="121.7" y1="118" x2="121.7" y2="125"/>
+          <line x1="217.3" y1="118" x2="217.3" y2="125"/>
+          <line x1="313.0" y1="118" x2="313.0" y2="125"/>
+          <line x1="408.7" y1="118" x2="408.7" y2="125"/>
+          <line x1="504.3" y1="118" x2="504.3" y2="125"/>
+          <line x1="600.0" y1="118" x2="600.0" y2="125"/>
+          <line x1="695.7" y1="118" x2="695.7" y2="125"/>
+          <line x1="791.3" y1="118" x2="791.3" y2="125"/>
+          <line x1="887.0" y1="118" x2="887.0" y2="125"/>
+          <line x1="982.7" y1="118" x2="982.7" y2="125"/>
+          <line x1="1078.3" y1="118" x2="1078.3" y2="125"/>
+          <line x1="1174.0" y1="118" x2="1174.0" y2="125"/>
+        </g>
+      </svg>
     </div>
+
+    <p class="rhythm-key">
+      <span>Width is how long it lasted.</span>
+      <span>Height is the pain level logged.</span>
+      <span>Ticks are weeks.</span>
+      <span>Illustration, not real data.</span>
+    </p>
   </div>
 
   <div class="wrap">
-    <section class="narrow">
-      <h2>It won't tell you more than it knows</h2>
-      <p class="muted">
-        Two flares and one of them tagged "alcohol" is not a fifty per cent correlation, so Aura
-        doesn't call it one. Percentages stay hidden until there is a sample worth quoting, the
-        weather comparison waits for enough days in each pressure band, and the summary you hand
-        to a clinician reports counts rather than conclusions.
-      </p>
-      <p class="note">
-        Aura is not a medical device. It does not diagnose, treat or prevent anything, and nothing
-        it shows is medical advice. Any pattern it reports is descriptive only.
-      </p>
+
+    <section class="feature">
+      <div class="feature-text">
+        <p class="label">Doses</p>
+        <h2>The times you actually take them.</h2>
+        <p>
+          Add each medication with its own dose times rather than a default the app picked for
+          you. A reminder arrives when one is due, and the day's doses sit on the Today screen, so
+          you can stop trying to remember whether this morning already happened.
+        </p>
+        <p class="feature-note">
+          Reminders are scheduled on the phone itself. There is no push server involved, and their
+          contents never leave the device.
+        </p>
+      </div>
+      <div class="phone">
+        <div class="phone-body">
+          <span class="phone-edge" style="--z:-5px"></span>
+          <span class="phone-edge" style="--z:-10px"></span>
+          <span class="phone-edge" style="--z:-15px"></span>
+          <span class="phone-button left" style="top:19%;height:5.5%"></span>
+          <span class="phone-button left" style="top:27%;height:9%"></span>
+          <span class="phone-button left" style="top:38%;height:9%"></span>
+          <span class="phone-button right" style="top:31%;height:13%"></span>
+          <div class="phone-screen">
+            <img src="shots/medications.webp"
+                 srcset="shots/medications.webp 1x, shots/medications@2x.webp 2x"
+                 width="360" height="782" loading="lazy"
+                 alt="The medications screen: two of three doses taken today, a schedule showing hydroxychloroquine at 8:04am and naproxen at 9:04am marked taken, and an evening dose still due.">
+            <span class="phone-island"></span>
+          </div>
+          <span class="phone-glare"></span>
+        </div>
+      </div>
     </section>
 
-    <section>
-      <ul class="points">
-        <li>
-          <h3>No account, no backend</h3>
-          <p>There is nothing to sign up for. Your records live in a database on your phone, and there is no server holding a copy.</p>
-        </li>
-        <li>
-          <h3>Log a flare in under a minute</h3>
-          <p>Joints, pain, symmetry, what you think set it off. Start it when it begins, mark it resolved when it goes.</p>
-        </li>
-        <li>
-          <h3>Apple Health, read only</h3>
-          <p>Sleep, heart rate and HRV shown alongside your flare history. Aura reads; it never writes, and never shares.</p>
-        </li>
-        <li>
-          <h3>A summary for your appointment</h3>
-          <p>Export a PDF of the period your rheumatologist asked about, with the counts laid out and no interpretation added.</p>
-        </li>
-        <li>
-          <h3>New research, as it appears</h3>
-          <p>Palindromic rheumatism papers from PubMed Central, on a condition most people have to go looking for news about.</p>
-        </li>
-        <li>
-          <h3>No ads, no analytics</h3>
-          <p>No advertising network, no tracking SDK, no third-party libraries at all. <a href="privacy.html">Read the policy</a>.</p>
-        </li>
-      </ul>
+    <section class="feature flip">
+      <div class="feature-text">
+        <p class="label">Weather</p>
+        <h2>A percentage needs a denominator.</h2>
+        <p>
+          Aura records the weather every day you open it, not only on the days you flare. That is
+          the difference between "flares on 2 of 18 low pressure days" and a number that is really
+          just describing your local climate.
+        </p>
+        <p class="feature-note">
+          The comparison stays hidden until enough days have accumulated in more than one pressure
+          band, and it says so plainly when the rate looks the same across all of them.
+        </p>
+      </div>
+      <div class="phone">
+        <div class="phone-body">
+          <span class="phone-edge" style="--z:-5px"></span>
+          <span class="phone-edge" style="--z:-10px"></span>
+          <span class="phone-edge" style="--z:-15px"></span>
+          <span class="phone-button left" style="top:19%;height:5.5%"></span>
+          <span class="phone-button left" style="top:27%;height:9%"></span>
+          <span class="phone-button left" style="top:38%;height:9%"></span>
+          <span class="phone-button right" style="top:31%;height:13%"></span>
+          <div class="phone-screen">
+            <img src="shots/weather.webp"
+                 srcset="shots/weather.webp 1x, shots/weather@2x.webp 2x"
+                 width="360" height="782" loading="lazy"
+                 alt="A chart of flare rate by barometric pressure: flares on 2 of 18 low-pressure days, 4 of 34 normal, and 5 of 32 high, with a note that the rate looks similar across conditions.">
+            <span class="phone-island"></span>
+          </div>
+          <span class="phone-glare"></span>
+        </div>
+      </div>
     </section>
+
+    <section class="feature">
+      <div class="feature-text">
+        <p class="label">Patterns</p>
+        <h2>What keeps coming up, once it has.</h2>
+        <p>
+          Joints and triggers ranked by how often you tagged them, held back entirely until there
+          are enough flares for a ranking to mean anything. Two flares with one of them tagged
+          "alcohol" is not a fifty per cent finding, so you get plain counts until the numbers can
+          carry more.
+        </p>
+        <p class="feature-note">
+          Frequency is shown across weeks rather than days, because a condition that goes quiet for
+          a fortnight looks like a cure on a daily chart.
+        </p>
+      </div>
+      <div class="phone">
+        <div class="phone-body">
+          <span class="phone-edge" style="--z:-5px"></span>
+          <span class="phone-edge" style="--z:-10px"></span>
+          <span class="phone-edge" style="--z:-15px"></span>
+          <span class="phone-button left" style="top:19%;height:5.5%"></span>
+          <span class="phone-button left" style="top:27%;height:9%"></span>
+          <span class="phone-button left" style="top:38%;height:9%"></span>
+          <span class="phone-button right" style="top:31%;height:13%"></span>
+          <div class="phone-screen">
+            <img src="shots/patterns.webp"
+                 srcset="shots/patterns.webp 1x, shots/patterns@2x.webp 2x"
+                 width="360" height="782" loading="lazy"
+                 alt="Joint and trigger rankings: right wrist in 4 of 11 flares, left knee in 2, and stress the most tagged trigger at 5 of 11 flares.">
+            <span class="phone-island"></span>
+          </div>
+          <span class="phone-glare"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature flip">
+      <div class="feature-text">
+        <p class="label">Appointments</p>
+        <h2>Ready for the ten minutes you get.</h2>
+        <p>
+          Keep a running list of the questions you always forget on the day, then export a PDF
+          covering exactly the period your rheumatologist asked about. Counts and dates, with no
+          interpretation added on top.
+        </p>
+        <p class="feature-note">
+          The file is written on your device and shared only through the iOS share sheet, only when
+          you choose to.
+        </p>
+      </div>
+      <div class="phone">
+        <div class="phone-body">
+          <span class="phone-edge" style="--z:-5px"></span>
+          <span class="phone-edge" style="--z:-10px"></span>
+          <span class="phone-edge" style="--z:-15px"></span>
+          <span class="phone-button left" style="top:19%;height:5.5%"></span>
+          <span class="phone-button left" style="top:27%;height:9%"></span>
+          <span class="phone-button left" style="top:38%;height:9%"></span>
+          <span class="phone-button right" style="top:31%;height:13%"></span>
+          <div class="phone-screen">
+            <img src="shots/doctor.webp"
+                 srcset="shots/doctor.webp 1x, shots/doctor@2x.webp 2x"
+                 width="360" height="782" loading="lazy"
+                 alt="Doctor Mode: a report period starting 12 May 2026, two saved questions about morning stiffness and what else to track, and a button to generate the summary.">
+            <span class="phone-island"></span>
+          </div>
+          <span class="phone-glare"></span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="wrap claims">
+    <div class="narrow">
+      <h2>It won't tell you more than it knows.</h2>
+      <p class="muted">
+        Most of the work in an app like this is deciding what not to say. Aura holds a number back
+        until the sample can support it, and it never dresses a coincidence up as a cause.
+      </p>
+    </div>
+
+    <div class="claims-grid">
+      <div class="claims-col">
+        <h3>What it does</h3>
+        <ul>
+          <li>Logs a flare in under a minute: joints, pain, symmetry, and what you think set it off.</li>
+          <li>Ranks the joints, triggers and symptoms that keep recurring.</li>
+          <li>Compares flare days against the days you were fine.</li>
+          <li>Schedules medication reminders locally, at your own dose times.</li>
+          <li>Reads sleep, heart rate, HRV and activity from Apple Health, and only reads.</li>
+          <li>Pulls new palindromic rheumatism papers from PubMed Central.</li>
+        </ul>
+      </div>
+
+      <div class="claims-col no">
+        <h3>What it doesn't</h3>
+        <ul>
+          <li><b>Predict a flare.</b> Nothing can, and an app that suggests otherwise is guessing.</li>
+          <li>Quote a percentage off the back of two or three flares.</li>
+          <li>Send anything you log to a server. There isn't one.</li>
+          <li>Carry analytics, advertising, or any third-party library at all.</li>
+          <li>Diagnose, treat, or offer anything resembling medical advice.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="note">
+      Aura is not a medical device. It does not diagnose, treat or prevent any condition, and
+      nothing it shows is medical advice. Any pattern it reports is descriptive only.
+      <a href="privacy.html">Read the privacy policy</a>.
+    </p>
   </div>
 
 </main>
