@@ -28,12 +28,24 @@ radius would double up on the frame the page draws.
 
 ## The app icon
 
-`assets/` holds renders of the shipping icon, not a redraw of it. They come from
-`aura-ios/Aura/Resources/AppIcon.icon` compiled by `actool` for macOS, whose 1024px intermediate is
-the same glass composition iOS renders. The opaque shape is cropped out of that, recomposited over
-the gradient from `icon.json`, and masked with the iOS superellipse. Checked against `actool`'s own
-iOS render at 120px: mean absolute difference 2.4/255. Regenerate it the same way if the icon
-changes, rather than screenshotting a device.
+`assets/` holds renders of the shipping icon, not a redraw of it. Compiling
+`aura-ios/Aura/Resources/AppIcon.icon` with `actool` for `iphoneos` leaves both 1024px appearance
+renders in a temporary directory on the way to `Assets.car`; catch them while it runs, mask each
+with the iOS superellipse, and that is the whole set. Do it that way rather than screenshotting a
+device or redrawing anything.
+
+```sh
+xcrun actool ../aura-ios/Aura/Resources/AppIcon.icon --compile /tmp/out --platform iphoneos \
+  --minimum-deployment-target 26.0 --app-icon AppIcon --output-partial-info-plist /tmp/out/p.plist &
+# then copy AppIcon1024x1024_UIAppearance{Any,Dark}*.png out of $TMPDIR/*/ before it finishes
+```
+
+The header icon, the apple-touch icon and the social card use the light appearance. **The favicon
+uses the dark one**, which is deliberate: at 16px the light icon's pale glass body dissolves into a
+light tab bar and all that survives is a small orange dot. The dark appearance is the same logo and
+holds on either chrome. A `media="(prefers-color-scheme: dark)"` pair would be nicer still, except
+that browsers ignoring `media` on `rel=icon` fall back to document order, and no ordering leaves
+the light icon out of the light-tab-bar case.
 
 ## The app repo is the source of truth
 
