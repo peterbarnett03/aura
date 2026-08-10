@@ -1,0 +1,260 @@
+/* Aura — companion site
+ *
+ * Three colours and one accent. The accent is the app's own teal, taken from Core/Design/
+ * AuraTheme.swift, so someone arriving from the App Store listing recognises the thing they are
+ * about to install. It is darkened a little from the in-app value: #4A90A4 clears 3:1 against this
+ * page ground but not 4.5:1, and link text has to clear 4.5:1.
+ *
+ * The neutral is warmed very slightly, matching the app's off-white rather than a pure grey —
+ * beside teal a pure grey reads cold, and this is an app for people having a rough time.
+ *
+ * Set in system-ui on purpose. On an iPhone that resolves to SF, which is the face the app itself
+ * is set in — a webfont would make the page look less like the product, not more, and would cost
+ * a round trip on a page whose job is partly to be readable on a bad connection.
+ *
+ * The screenshots are light in both themes. Aura is a light product, they sit comfortably on
+ * either ground, and carrying a dark set would double the assets to serve a case nobody asked for.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #FAF9F7;
+  --surface: #F0EFEC;
+  --fg: #222D34;
+  --fg-2: #63706F;
+  --accent: #2F7183;
+  --line: rgba(20, 40, 45, 0.10);
+  --shot-shadow: rgba(26, 44, 50, 0.20);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121417;
+    --surface: #1C1F23;
+    --fg: #ECEFF1;
+    --fg-2: #A3AFB4;
+    --accent: #6FB6C8;
+    --line: rgba(255, 255, 255, 0.10);
+    --shot-shadow: rgba(0, 0, 0, 0.55);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.wrap { width: 100%; max-width: 64rem; margin: 0 auto; padding: 0 24px; }
+.narrow { max-width: 42rem; }
+
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ---- Header ---------------------------------------------------------- */
+
+.site-head { border-bottom: 1px solid var(--line); }
+.site-head .wrap { display: flex; align-items: center; height: 68px; gap: 24px; }
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  color: var(--fg);
+  text-decoration: none;
+}
+.wordmark img { width: 26px; height: 26px; border-radius: 7px; display: block; }
+
+.site-head nav { margin-left: auto; display: flex; gap: 22px; }
+.site-head nav a {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg-2);
+  text-decoration: none;
+}
+.site-head nav a:hover,
+.site-head nav a[aria-current="page"] { color: var(--fg); }
+
+/* ---- Hero ------------------------------------------------------------ */
+
+.hero { padding: 92px 0 24px; }
+.hero-grid { display: grid; gap: 56px; align-items: center; }
+@media (min-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr 330px; gap: 72px; }
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6.1vw, 3.7rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.06;
+  margin: 0 0 22px;
+  text-wrap: balance;
+}
+.hero .lede {
+  font-size: clamp(1.08rem, 2.2vw, 1.26rem);
+  line-height: 1.5;
+  color: var(--fg-2);
+  margin: 0 0 34px;
+  max-width: 32rem;
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  color: var(--accent);
+  margin: 0 0 20px;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 11px 20px;
+}
+.status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+
+/* ---- Screenshots ----------------------------------------------------- */
+
+/* A rounded frame and a shadow, and nothing else. A drawn phone bezel would be chrome around
+   chrome — the capture already contains the status bar and the app's own corners. */
+.shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 26px;
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px -24px var(--shot-shadow);
+}
+
+.gallery { padding: 88px 0 32px; }
+.gallery-grid {
+  display: grid;
+  gap: 44px 32px;
+  grid-template-columns: 1fr;
+  margin-top: 44px;
+}
+@media (min-width: 720px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+.gallery figure { margin: 0; }
+.gallery figcaption {
+  margin-top: 18px;
+  font-size: 15px;
+  color: var(--fg-2);
+  line-height: 1.5;
+}
+.gallery figcaption b {
+  display: block;
+  color: var(--fg);
+  font-weight: 650;
+  margin-bottom: 2px;
+}
+
+/* ---- Prose ----------------------------------------------------------- */
+
+section { padding: 40px 0; }
+
+h2 {
+  font-size: clamp(1.6rem, 3.4vw, 2.05rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+h3 { font-size: 1.02rem; font-weight: 650; margin: 0 0 4px; letter-spacing: -0.012em; }
+p { margin: 0 0 1.1rem; text-wrap: pretty; }
+p:last-child { margin-bottom: 0; }
+.muted { color: var(--fg-2); }
+
+.points { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 30px; }
+@media (min-width: 720px) { .points { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
+.points p { font-size: 15.5px; color: var(--fg-2); margin: 0; }
+
+/* A quiet, factual note rather than a banner. Used for the medical disclaimer, which has to be
+   present and easy to find but should not be the loudest thing on the page. */
+.note {
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 12px 12px 0;
+  padding: 18px 22px;
+  margin: 8px 0 0;
+  font-size: 15.5px;
+  color: var(--fg-2);
+}
+
+/* ---- Document pages -------------------------------------------------- */
+
+.doc { padding: 72px 0 24px; }
+.doc h1 {
+  font-size: clamp(2.1rem, 5vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin: 0 0 12px;
+}
+.doc .lede { color: var(--fg-2); font-size: 1.1rem; margin: 0 0 38px; }
+.doc h2 { font-size: 1.2rem; font-weight: 700; margin: 44px 0 12px; letter-spacing: -0.015em; }
+.doc p { color: var(--fg); }
+.doc ul { margin: 0 0 1.1rem; padding-left: 1.2rem; }
+.doc li { margin: 0.5rem 0; }
+
+.summary {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px 28px;
+  margin: 0 0 40px;
+}
+.summary h2 {
+  margin: 0 0 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.summary ul { margin: 0; padding-left: 1.2rem; }
+.summary li { margin: 0.6rem 0; color: var(--fg-2); }
+
+.updated { font-size: 14px; color: var(--fg-2); margin: 0 0 38px; }
+
+/* ---- Footer ---------------------------------------------------------- */
+
+.site-foot {
+  margin-top: 96px;
+  border-top: 1px solid var(--line);
+  padding: 32px 0 72px;
+  font-size: 15px;
+  color: var(--fg-2);
+}
+.site-foot .wrap { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.site-foot nav { margin-left: auto; display: flex; gap: 20px; }
+.site-foot a { color: var(--fg-2); text-decoration: none; }
+.site-foot a:hover { color: var(--fg); }

@@ -1,721 +1,153 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aura - Palindromic Rheumatism tracking app for managing symptoms, medications, and health insights. Currently in beta for iOS.">
-    <meta name="keywords" content="palindromic rheumatism, arthritis, health tracking, symptom management, medical app, beta">
-    <meta name="author" content="Peter Barnett">
-    <title>Aura - Palindromic Rheumatism Tracker (Beta)</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/app-icon.png">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://peterbarnett03.github.io/aura/">
-    <meta property="og:title" content="Aura - Palindromic Rheumatism Tracker">
-    <meta property="og:description" content="Privacy-first health tracking app for Palindromic Rheumatism. Track symptoms, manage medications, and discover patterns with Apple Health integration.">
-    <meta property="og:image" content="https://peterbarnett03.github.io/aura/screenshots/photo1.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://peterbarnett03.github.io/aura/">
-    <meta property="twitter:title" content="Aura - Palindromic Rheumatism Tracker">
-    <meta property="twitter:description" content="Privacy-first health tracking app for Palindromic Rheumatism. Track symptoms, manage medications, and discover patterns with Apple Health integration.">
-    <meta property="twitter:image" content="https://peterbarnett03.github.io/aura/screenshots/photo1.png">
-    
-    <!-- PWA -->
-    <meta name="theme-color" content="#10B981">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #374151;
-            background: #f9fafb;
-            height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .main-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-        
-        .content-wrapper {
-            max-width: 1000px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 32px;
-            align-items: center;
-        }
-        
-        .main-content {
-            background: white;
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        
-        .logo {
-            width: 64px;
-            height: 64px;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-        }
-        
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #111827;
-            margin-bottom: 6px;
-            line-height: 1.1;
-        }
-        
-        .tagline {
-            font-size: 1.125rem;
-            color: #6B7280;
-            font-weight: 400;
-            margin-bottom: 16px;
-            line-height: 1.3;
-        }
-        
-        .beta-badge {
-            display: inline-block;
-            background: #FEF3C7;
-            color: #D97706;
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-bottom: 16px;
-        }
-        
-        .features {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: #F8FAFC;
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid #E2E8F0;
-        }
-        
-        .feature-icon {
-            font-size: 1em;
-        }
-        
-        .feature-text {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #475569;
-        }
-        
-        .description {
-            font-size: 1rem;
-            color: #4B5563;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
-        /* Screenshot Gallery */
-        .screenshot-gallery {
-            margin-bottom: 20px;
-        }
-        
-        .gallery-container {
-            position: relative;
-            background: #F8FAFC;
-            border-radius: 10px;
-            padding: 16px;
-            border: 1px solid #E2E8F0;
-        }
-        
-        .gallery-header {
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        
-        .gallery-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 2px;
-        }
-        
-        .gallery-subtitle {
-            font-size: 0.7rem;
-            color: #6B7280;
-        }
-        
-        .screenshots-container {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding: 2px 0 6px 0;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        .screenshots-container::-webkit-scrollbar {
-            height: 4px;
-        }
-        
-        .screenshots-container::-webkit-scrollbar-track {
-            background: #F1F5F9;
-            border-radius: 2px;
-        }
-        
-        .screenshots-container::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
-            border-radius: 2px;
-        }
-        
-        .screenshot {
-            flex: 0 0 auto;
-            width: 90px;
-            height: 160px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid #E2E8F0;
-        }
-        
-        .screenshot:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-        }
-        
-        .screenshot img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: #10B981;
-            color: white;
-            padding: 14px 28px;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-            text-align: center;
-            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
-        }
-        
-        .download-btn:hover {
-            background: #059669;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
-        }
-        
-        .download-btn:focus {
-            outline: 2px solid #10B981;
-            outline-offset: 2px;
-        }
-        
-        .download-icon {
-            font-size: 1.2em;
-        }
-        
-        .support-info {
-            background: #F3F4F6;
-            padding: 20px;
-            border-radius: 12px;
-            font-size: 0.875rem;
-        }
-        
-        .support-info a {
-            color: #10B981;
-            text-decoration: none;
-        }
-        
-        .support-info a:hover {
-            text-decoration: underline;
-        }
-        
-        .sidebar-btn {
-            background: white;
-            border: 2px solid #E5E7EB;
-            color: #374151;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-            font-family: inherit;
-            font-size: inherit;
-        }
-        
-        .sidebar-btn:hover {
-            border-color: #10B981;
-            color: #10B981;
-            background: #F0FDF4;
-            transform: translateY(-1px);
-        }
-        
-        .sidebar-btn:focus {
-            outline: 2px solid #10B981;
-            outline-offset: 2px;
-        }
-        
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            animation: fadeIn 0.2s ease;
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 2% auto;
-            padding: 32px;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideIn 0.2s ease;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        
-        .image-modal-content {
-            background: transparent;
-            padding: 20px;
-            max-width: 90vw;
-            max-height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-image {
-            max-width: 100%;
-            max-height: 80vh;
-            border-radius: 12px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideIn {
-            from { 
-                opacity: 0;
-                transform: translateY(-20px) scale(0.95);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-        
-        .close {
-            position: absolute;
-            top: 16px;
-            right: 24px;
-            color: #6B7280;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            background: none;
-            padding: 4px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-            line-height: 1;
-        }
-        
-        .close:hover {
-            color: #374151;
-            background: #F3F4F6;
-        }
-        
-        .close:focus {
-            outline: 2px solid #10B981;
-            outline-offset: 2px;
-        }
-        
-        .image-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .image-close:hover {
-            background: rgba(0, 0, 0, 0.7);
-        }
-        
-        .modal h2 {
-            color: #111827;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #E5E7EB;
-        }
-        
-        .modal h3 {
-            color: #374151;
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin: 24px 0 12px;
-        }
-        
-        .modal p {
-            margin-bottom: 16px;
-            color: #4B5563;
-        }
-        
-        .modal ul {
-            margin: 16px 0;
-            padding-left: 20px;
-        }
-        
-        .modal li {
-            margin-bottom: 8px;
-            color: #4B5563;
-        }
-        
-        @media (max-width: 768px) {
-            .content-wrapper {
-                grid-template-columns: 1fr;
-                gap: 24px;
-                text-align: center;
-            }
-            
-            .main-content {
-                padding: 24px 20px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .sidebar {
-                order: -1;
-            }
-            
-            .features {
-                justify-content: center;
-                gap: 12px;
-            }
-            
-            .feature {
-                font-size: 0.85rem;
-            }
-            
-            .screenshot {
-                width: 80px;
-                height: 140px;
-            }
-            
-            .modal-content {
-                width: 95%;
-                margin: 5% auto;
-                padding: 24px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .screenshot {
-                width: 70px;
-                height: 125px;
-            }
-            
-            .screenshots-container {
-                gap: 8px;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aura — a tracker built for palindromic rheumatism</title>
+<meta name="description" content="A flare tracker for iPhone built around how palindromic rheumatism actually behaves. No account, no backend, and nothing you log leaves your phone.">
+<meta name="theme-color" content="#121417" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FAF9F7" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="Aura">
+<meta property="og:description" content="A flare tracker for iPhone built around how palindromic rheumatism actually behaves. No account, no backend, and nothing you log leaves your phone.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://peterbarnett03.github.io/aura/">
+<meta property="og:image" content="https://peterbarnett03.github.io/aura/shots/today@2x.webp">
+<link rel="icon" type="image/png" href="assets/app-icon.png">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main-container">
-        <div class="content-wrapper">
-            <div class="main-content">
-                <div class="logo">
-                    <img src="assets/app-icon.png" alt="Aura app icon">
-                </div>
-                <h1>Aura</h1>
-                <p class="tagline">Palindromic Rheumatism Tracker</p>
-                <div class="beta-badge">Beta</div>
-                
-                <p class="description">Track symptoms, manage medications, and gain insights into your Palindromic Rheumatism patterns. Deep Apple Health integration with privacy-first design.</p>
-                
-                <div class="screenshot-gallery">
-                    <div class="gallery-container">
-                        <div class="gallery-header">
-                            <div class="gallery-title">App Screenshots</div>
-                            <div class="gallery-subtitle">Click to enlarge • Scroll to see more</div>
-                        </div>
-                        <div class="screenshots-container">
-                            <div class="screenshot" onclick="openImageModal('screenshots/photo1.png')">
-                                <img src="screenshots/photo1.png" alt="Aura app screenshot 1">
-                            </div>
-                            <div class="screenshot" onclick="openImageModal('screenshots/photo2.png')">
-                                <img src="screenshots/photo2.png" alt="Aura app screenshot 2">
-                            </div>
-                            <div class="screenshot" onclick="openImageModal('screenshots/photo3.png')">
-                                <img src="screenshots/photo3.png" alt="Aura app screenshot 3">
-                            </div>
-                            <div class="screenshot" onclick="openImageModal('screenshots/photo4.png')">
-                                <img src="screenshots/photo4.png" alt="Aura app screenshot 4">
-                            </div>
-                            <div class="screenshot" onclick="openImageModal('screenshots/photo5.png')">
-                                <img src="screenshots/photo5.png" alt="Aura app screenshot 5">
-                            </div>
-                            <div class="screenshot" onclick="openImageModal('screenshots/photo6.png')">
-                                <img src="screenshots/photo6.png" alt="Aura app screenshot 6">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="sidebar">
-                <a href="https://testflight.apple.com/join/ABBHXqG4" target="_blank" rel="noopener noreferrer" class="download-btn">
-                    <span class="download-icon">📱</span>
-                    Join Beta on TestFlight
-                </a>
-                <a href="https://github.com/peterbarnett03/aura/issues/new" target="_blank" rel="noopener noreferrer" class="sidebar-btn" style="text-decoration: none; display: block;">Create a Ticket</a>
-                <a href="privacy.html" class="sidebar-btn" style="text-decoration: none; display: block;">Privacy Policy</a>
-                <button class="sidebar-btn" onclick="openModal('termsModal')">Terms of Service</button>
-                <div class="support-info">
-                    <p><strong>Support:</strong><br>
-                    <a href="https://github.com/peterbarnett03/aura/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a></p>
-                    <p><strong>Developer:</strong><br>Peter Barnett</p>
-                    <p><strong>System Requirements:</strong><br>iOS 14.0+</p>
-                </div>
-            </div>
-        </div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="wordmark" href="./"><img src="assets/app-icon.png" alt="" width="26" height="26">AURA</a>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">FOR IPHONE</p>
+        <h1>A tracker built for palindromic rheumatism.</h1>
+        <p class="lede">
+          Flares arrive, move between joints and resolve completely. Aura is built around that,
+          not around a chronic ache that stays put — so logging one takes under a minute, and
+          months of them add up to something you can show a rheumatologist.
+        </p>
+        <p class="status"><span class="dot"></span> Coming to the App Store</p>
+      </div>
+
+      <picture>
+        <img class="shot"
+             src="shots/today.webp"
+             srcset="shots/today.webp 1x, shots/today@2x.webp 2x"
+             width="330" height="717"
+             alt="Aura's Today screen: an active flare in the right fingers and wrist at pain level 6 that started six hours ago, two of three medication doses taken, and a recent research paper on palindromic flares.">
+      </picture>
+    </div>
+  </div>
+
+  <div class="wrap gallery">
+    <div class="narrow">
+      <h2>Counts you can check, not predictions</h2>
+      <p class="muted">
+        Nothing here forecasts a flare, because nothing can. What the app does instead is keep an
+        honest tally: which joints, how often, what you tagged alongside it, and what the weather
+        was doing on the days you were fine as well as the days you weren't.
+      </p>
     </div>
 
-    <!-- Image Modal -->
-    <div id="imageModal" class="modal">
-        <div class="image-modal-content">
-            <button class="close image-close" onclick="closeImageModal()" aria-label="Close image">&times;</button>
-            <img id="modalImage" class="modal-image" src="" alt="Screenshot">
-        </div>
+    <div class="gallery-grid">
+      <figure>
+        <img class="shot"
+             src="shots/medications.webp"
+             srcset="shots/medications.webp 1x, shots/medications@2x.webp 2x"
+             width="330" height="717" loading="lazy"
+             alt="The medications screen: two of three doses taken today, a schedule showing hydroxychloroquine at 8:04am and naproxen at 9:04am marked taken, and an evening dose still due.">
+        <figcaption><b>Doses, at the times you take them</b>Set each dose to when you actually take it, get a reminder when it's due, and stop trying to remember whether this morning happened.</figcaption>
+      </figure>
+
+      <figure>
+        <img class="shot"
+             src="shots/weather.webp"
+             srcset="shots/weather.webp 1x, shots/weather@2x.webp 2x"
+             width="330" height="717" loading="lazy"
+             alt="A chart of flare rate by barometric pressure: flares on 2 of 18 low-pressure days, 4 of 34 normal, and 5 of 32 high, with a note that the rate looks similar across conditions.">
+        <figcaption><b>Weather, with a denominator</b>Aura records the weather every day, not just on flare days, so a percentage means something instead of describing your local climate.</figcaption>
+      </figure>
+
+      <figure>
+        <img class="shot"
+             src="shots/patterns.webp"
+             srcset="shots/patterns.webp 1x, shots/patterns@2x.webp 2x"
+             width="330" height="717" loading="lazy"
+             alt="Joint and trigger rankings: right wrist in 4 of 11 flares, left knee in 2, and stress the most tagged trigger at 5 of 11 flares.">
+        <figcaption><b>What keeps coming up</b>Joints and triggers ranked by how often you tagged them — and held back entirely until there are enough flares for the number to mean anything.</figcaption>
+      </figure>
     </div>
+  </div>
 
-    <!-- Privacy Policy Modal -->
+  <div class="wrap">
+    <section class="narrow">
+      <h2>It won't tell you more than it knows</h2>
+      <p class="muted">
+        Two flares and one of them tagged "alcohol" is not a fifty per cent correlation, so Aura
+        doesn't call it one. Percentages stay hidden until there is a sample worth quoting, the
+        weather comparison waits for enough days in each pressure band, and the summary you hand
+        to a clinician reports counts rather than conclusions.
+      </p>
+      <p class="note">
+        Aura is not a medical device. It does not diagnose, treat or prevent anything, and nothing
+        it shows is medical advice. Any pattern it reports is descriptive only.
+      </p>
+    </section>
 
-    <!-- Terms Modal -->
-    <div id="termsModal" class="modal">
-        <div class="modal-content">
-            <button class="close" onclick="closeModal('termsModal')" aria-label="Close terms of service">&times;</button>
-            <h2>Terms of Service</h2>
-            <p><strong>Last Updated:</strong> August 5, 2025</p>
-            
-            <h3>1. Beta Software Agreement</h3>
-            <p>Aura is currently in beta testing. By using this software, you acknowledge that:</p>
-            <ul>
-                <li>The software may contain bugs or incomplete features</li>
-                <li>Data backup is your responsibility</li>
-                <li>Features may change or be removed without notice</li>
-                <li>No warranty is provided for beta software</li>
-            </ul>
-            
-            <h3>2. Medical Disclaimer</h3>
-            <p><strong>Important:</strong> Aura is designed for informational and tracking purposes only. It is not intended to:</p>
-            <ul>
-                <li>Diagnose any medical condition</li>
-                <li>Provide medical advice or treatment recommendations</li>
-                <li>Replace professional medical consultation</li>
-                <li>Be used for medical emergencies</li>
-            </ul>
-            
-            <h3>3. User Responsibilities</h3>
-            <ul>
-                <li>Provide accurate health information</li>
-                <li>Use the app responsibly and in accordance with these terms</li>
-                <li>Maintain the confidentiality of your account credentials</li>
-                <li>Report any security vulnerabilities or bugs</li>
-            </ul>
-            
-            <h3>4. Limitation of Liability</h3>
-            <p>To the fullest extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of Aura.</p>
-            
-            <h3>5. System Requirements</h3>
-            <ul>
-                <li><strong>iOS:</strong> Requires iOS 14.0 or later</li>
-                <li><strong>Storage:</strong> Approximately 50MB of free space</li>
-                <li><strong>Permissions:</strong> Optional access to Apple Health and Notifications</li>
-            </ul>
-        </div>
-    </div>
+    <section>
+      <ul class="points">
+        <li>
+          <h3>No account, no backend</h3>
+          <p>There is nothing to sign up for. Your records live in a database on your phone, and there is no server holding a copy.</p>
+        </li>
+        <li>
+          <h3>Log a flare in under a minute</h3>
+          <p>Joints, pain, symmetry, what you think set it off. Start it when it begins, mark it resolved when it goes.</p>
+        </li>
+        <li>
+          <h3>Apple Health, read only</h3>
+          <p>Sleep, heart rate and HRV shown alongside your flare history. Aura reads; it never writes, and never shares.</p>
+        </li>
+        <li>
+          <h3>A summary for your appointment</h3>
+          <p>Export a PDF of the period your rheumatologist asked about, with the counts laid out and no interpretation added.</p>
+        </li>
+        <li>
+          <h3>New research, as it appears</h3>
+          <p>Palindromic rheumatism papers from PubMed Central, on a condition most people have to go looking for news about.</p>
+        </li>
+        <li>
+          <h3>No ads, no analytics</h3>
+          <p>No advertising network, no tracking SDK, no third-party libraries at all. <a href="privacy.html">Read the policy</a>.</p>
+        </li>
+      </ul>
+    </section>
+  </div>
 
-    <script>
-        let currentModal = null;
-        let lastFocusedElement = null;
-        
-        function openModal(modalId) {
-            try {
-                const modal = document.getElementById(modalId);
-                if (!modal) return;
-                
-                lastFocusedElement = document.activeElement;
-                modal.style.display = "block";
-                currentModal = modalId;
-                
-                const closeButton = modal.querySelector('.close');
-                if (closeButton) {
-                    setTimeout(() => closeButton.focus(), 100);
-                }
-                
-                document.body.style.overflow = 'hidden';
-            } catch (error) {
-                console.error('Error opening modal:', error);
-            }
-        }
-        
-        function closeModal(modalId) {
-            try {
-                const modal = document.getElementById(modalId);
-                if (!modal) return;
-                
-                modal.style.display = "none";
-                currentModal = null;
-                document.body.style.overflow = '';
-                
-                if (lastFocusedElement) {
-                    lastFocusedElement.focus();
-                    lastFocusedElement = null;
-                }
-            } catch (error) {
-                console.error('Error closing modal:', error);
-            }
-        }
-        
-        function openImageModal(imageSrc) {
-            try {
-                const modal = document.getElementById('imageModal');
-                const modalImage = document.getElementById('modalImage');
-                
-                lastFocusedElement = document.activeElement;
-                modalImage.src = imageSrc;
-                modal.style.display = "block";
-                currentModal = 'imageModal';
-                document.body.style.overflow = 'hidden';
-            } catch (error) {
-                console.error('Error opening image modal:', error);
-            }
-        }
-        
-        function closeImageModal() {
-            closeModal('imageModal');
-        }
-        
-        // Enhanced modal event handling
-        document.addEventListener('DOMContentLoaded', function() {
-            // ESC key support
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && currentModal) {
-                    if (currentModal === 'imageModal') {
-                        closeImageModal();
-                    } else {
-                        closeModal(currentModal);
-                    }
-                }
-            });
-            
-            // Click outside to close
-            document.addEventListener('click', function(event) {
-                if (event.target.classList.contains('modal')) {
-                    if (event.target.id === 'imageModal') {
-                        closeImageModal();
-                    } else {
-                        closeModal(event.target.id);
-                    }
-                }
-            });
-            
-            // Focus trapping within modals
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Tab' && currentModal) {
-                    const modal = document.getElementById(currentModal);
-                    const focusableElements = modal.querySelectorAll(
-                        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-                    );
-                    
-                    if (focusableElements.length === 0) return;
-                    
-                    const firstElement = focusableElements[0];
-                    const lastElement = focusableElements[focusableElements.length - 1];
-                    
-                    if (event.shiftKey) {
-                        if (document.activeElement === firstElement) {
-                            event.preventDefault();
-                            lastElement.focus();
-                        }
-                    } else {
-                        if (document.activeElement === lastElement) {
-                            event.preventDefault();
-                            firstElement.focus();
-                        }
-                    }
-                }
-            });
-        });
-    </script>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Peter Barnett</span>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</footer>
+
 </body>
 </html>

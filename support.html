@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Support — Aura</title>
+<meta name="description" content="How to get help with Aura, and answers to the questions that come up most.">
+<meta name="theme-color" content="#121417" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FAF9F7" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" href="assets/app-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="wordmark" href="./"><img src="assets/app-icon.png" alt="" width="26" height="26">AURA</a>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html" aria-current="page">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap doc">
+  <div class="narrow">
+
+    <h1>Support</h1>
+    <p class="lede">
+      Aura is made by one person. Mail goes to a real inbox and gets a real reply, though not
+      always a fast one.
+    </p>
+
+    <div class="summary">
+      <h2>Get in touch</h2>
+      <ul>
+        <li>Email <a href="mailto:peter.barnett03@gmail.com">peter.barnett03@gmail.com</a> — bugs, questions, or a feature you need.</li>
+        <li>Include your iOS version and what you were doing when it went wrong. It genuinely helps.</li>
+        <li>Please don't send screenshots containing anything you would not want a stranger to read.</li>
+      </ul>
+    </div>
+
+    <h2>My health data isn't showing up</h2>
+    <p>
+      Aura only reads Apple Health if you allowed it, and iOS never tells an app which categories
+      you granted — so the app cannot warn you that a particular one is switched off. Check
+      Settings &rsaquo; Privacy &amp; Security &rsaquo; Health &rsaquo; Aura and confirm the
+      categories you expect are on. If a category has no data in Health itself, nothing will
+      appear here either.
+    </p>
+
+    <h2>Why is the weather chart empty?</h2>
+    <p>
+      It needs location access, and it needs days. Aura records one weather reading each day you
+      open the app, and the comparison only appears once several days have accumulated in more
+      than one pressure band — because a flare rate with nothing to compare it against is not a
+      comparison. Give it a couple of weeks.
+    </p>
+
+    <h2>Why won't it show me a percentage?</h2>
+    <p>
+      Deliberately. Below about five flares, one more changes a percentage by tens of points, so
+      the app shows plain counts instead and starts quoting proportions once there is a sample
+      worth quoting. The same applies to the weather comparison and the trigger rankings.
+    </p>
+
+    <h2>My reminders aren't arriving</h2>
+    <p>
+      Medication reminders are local notifications, so they need notification permission —
+      Settings &rsaquo; Notifications &rsaquo; Aura. Check the dose times on the medication
+      itself too: they default to sensible hours, but if you take a dose at 7pm and the schedule
+      still says 9am, the reminder will follow the schedule.
+    </p>
+
+    <h2>Can I get my data out?</h2>
+    <p>
+      Profile &rsaquo; Export Flare Data produces a PDF summary you can share or save. There is no
+      cloud copy to request, because there is no cloud: everything is on the device.
+    </p>
+
+    <h2>How do I delete everything?</h2>
+    <p>
+      Profile &rsaquo; Delete All Data erases every record permanently and immediately. Deleting
+      the app removes its database with it. Nothing is held on a server, so there is no further
+      request to make and nothing for anyone to delete on your behalf.
+    </p>
+
+    <h2>Is Aura a medical device?</h2>
+    <p>
+      No. It does not diagnose, treat or prevent any condition, and nothing it displays is medical
+      advice. It is a record of what you logged and a tally of what recurred. Decisions about your
+      care belong with your clinician.
+    </p>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span>&copy; 2026 Peter Barnett</span>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
