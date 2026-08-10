@@ -72,7 +72,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-.wrap { width: 100%; max-width: 68rem; margin: 0 auto; padding: 0 24px; }
+/* The page gutter. Anything that is also a .wrap must set padding-block, never the padding
+   shorthand: same specificity, later in the file, and the shorthand's implied zero takes the
+   gutter with it. Invisible on a desktop, where the max-width leaves slack either side, and
+   very visible on a phone, where the copy ends up against the glass. */
+.wrap { width: 100%; max-width: 68rem; margin: 0 auto; padding-inline: 24px; }
 .narrow { max-width: 42rem; }
 
 a { color: var(--accent); text-underline-offset: 3px; }
@@ -145,10 +149,10 @@ p:last-child { margin-bottom: 0; }
 
 /* ---- Hero ------------------------------------------------------------ */
 
-.hero { position: relative; padding: 72px 0 40px; }
+.hero { position: relative; padding-block: 72px 40px; }
 .hero-grid { display: grid; gap: 60px; align-items: center; }
 @media (min-width: 900px) {
-  .hero { padding: 88px 0 56px; }
+  .hero { padding-block: 88px 56px; }
   .hero-grid { grid-template-columns: minmax(0, 1fr) 340px; gap: 64px; }
 }
 
@@ -398,7 +402,7 @@ p:last-child { margin-bottom: 0; }
 /* The one graphic on the page that is not a screenshot. It is here because the shape of the
    condition is the whole argument for the app existing, and that shape is hard to describe in a
    sentence and obvious in a picture. Labelled as an illustration, because it is one. */
-.rhythm { padding: 30px 0 8px; }
+.rhythm { padding-block: 30px 8px; }
 .rhythm-head { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 40px; }
 .rhythm-head h2 { flex: 1 1 18rem; margin: 0; }
 .rhythm-head p { flex: 1 1 22rem; color: var(--fg-2); margin: 0; font-size: 16px; }
@@ -457,7 +461,7 @@ p:last-child { margin-bottom: 0; }
 
 /* Three at once, for the screens that need a caption rather than a paragraph. The outer two turn
    inward so the row reads as a group and the middle one is the one facing you. */
-.lineup { padding: 78px 0 8px; }
+.lineup { padding-block: 78px 8px; }
 .lineup > .narrow { margin-bottom: 52px; }
 .lineup-grid { display: grid; gap: 52px 30px; }
 @media (min-width: 780px) { .lineup-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -486,7 +490,7 @@ p:last-child { margin-bottom: 0; }
 
 /* ---- Does / doesn't -------------------------------------------------- */
 
-.claims { padding: 78px 0 24px; }
+.claims { padding-block: 78px 24px; }
 .claims > .narrow { margin-bottom: 44px; }
 .claims-grid { display: grid; gap: 22px; }
 @media (min-width: 780px) { .claims-grid { grid-template-columns: 1fr 1fr; gap: 26px; } }
@@ -543,7 +547,7 @@ p:last-child { margin-bottom: 0; }
 
 /* ---- Document pages -------------------------------------------------- */
 
-.doc { padding: 72px 0 24px; }
+.doc { padding-block: 72px 24px; }
 .doc h1 {
   font-size: clamp(2.1rem, 5vw, 2.7rem);
   font-weight: 750;
