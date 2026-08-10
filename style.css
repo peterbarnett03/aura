@@ -232,52 +232,95 @@ p:last-child { margin-bottom: 0; }
    width and one theme; this one reflows, stays sharp on any display, and the screenshot inside
    it is the app's own pixels at 2x, untouched.
  *
- * Proportions are the iPhone 16 Pro Max's, which is the device the captures came from: the body
- * is 77.6mm across with a 71.6mm screen, so the rail is 3.7% of the width on every side, and the
- * corner radius is 13.5% horizontally against 6.4% vertically. */
+ * Every proportion below is the iPhone 16 Pro Max's, which is the device the captures came from.
+ * Across its 77.6mm width: 1.0mm of titanium rail, 1.5mm of black glass border, then the 71.6mm
+ * display. The corner is anchored on the display, whose radius Apple publishes as 62pt of a
+ * 440pt width, near enough a seventh; the two layers outside it add their own thickness to that.
+ * Getting the black border and that radius right is most of what makes this read as a phone
+ * rather than as a rounded rectangle.
+ *
+ * Default is straight on. Tilt is opt in, per instance, through .near-left and .near-right,
+ * named for the edge that ends up closest to the viewer. */
 .phone {
-  --ry: -17deg;                 /* turn */
-  --rx: 5deg;                   /* tip back */
-  --rz: 1.4deg;                 /* the hand is never quite level */
-  --depth: 15px;
+  --ry: 0deg;                   /* turn */
+  --rx: 0deg;                   /* tip back */
+  --rz: 0deg;                   /* the hand is never quite level */
+  --depth: 0px;
+  --edge: none;                 /* the side wall only exists once it turns */
   position: relative;
   width: 100%;
   max-width: 340px;
-  perspective: 1500px;
+  /* Long, like a product shot taken on a 100mm lens. A short perspective splays the near edge
+     and reads as a video game asset. */
+  perspective: 2400px;
   perspective-origin: 50% 42%;
 }
+.phone.near-left  { --ry: -17deg; --rx: 5deg; --rz:  1.4deg; --depth: 16px; --edge: block; }
+.phone.near-right { --ry:  16deg; --rx: 5deg; --rz: -1.2deg; --depth: 16px; --edge: block; }
+
 .phone-body {
   position: relative;
-  padding: 3.7%;
-  border-radius: 13.5% / 6.4%;
+  padding: 1.29%;
+  border-radius: 16.2% / 7.77%;
   transform-style: preserve-3d;
   transform: rotateY(var(--ry)) rotateX(var(--rx)) rotateZ(var(--rz));
   background:
-    linear-gradient(148deg,
-      #E9E6E1 0%, #A6A29B 11%, #DBD7D0 23%, #7C7872 42%,
-      #CFCBC4 57%, #86827C 74%, #D9D5CE 88%, #A8A49D 100%);
+    /* The two antenna splits. They sit on the rail and are covered by the glass across the
+       middle, which is exactly where they are on the real thing. */
+    linear-gradient(180deg, transparent 12.2%, rgba(255, 255, 255, 0.5) 12.2% 12.42%, transparent 12.42%),
+    linear-gradient(180deg, transparent 87.4%, rgba(255, 255, 255, 0.5) 87.4% 87.62%, transparent 87.62%),
+    /* Brushed titanium: enough stops to give it two specular bands and a dark side, because a
+       three-stop gradient looks like plastic. */
+    linear-gradient(147deg,
+      #F4F1EC 0%, #BCB8B0 7%, #8B877F 16%, #E2DED7 26%, #A5A19A 36%,
+      #6E6A64 48%, #CFCBC4 60%, #969289 71%, #E8E4DD 83%, #A9A59D 93%, #7A766E 100%);
   box-shadow:
-    0 2px 3px rgba(0, 0, 0, 0.18),
-    0 40px 70px -34px var(--cast),
-    0 90px 90px -60px var(--cast);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),      /* the chamfer catching light */
+    inset 0 0 0 2.5px rgba(0, 0, 0, 0.10),          /* and turning away again */
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 34px 56px -30px var(--cast),
+    0 80px 90px -56px var(--cast);
 }
 
-/* Three plates stacked behind the front face give the body a side wall when it turns. One plate
-   alone leaves a hollow you can see straight through at this angle. */
+/* An iPhone corner is a superellipse, not a circular arc, and the difference shows up as the
+   black border looking fatter at 45 degrees than along the edges. Browsers that can draw one get
+   the real shape; the rest keep the arc, which nobody who has not measured it will notice. */
+@supports (corner-shape: squircle) {
+  .phone-body,
+  .phone-edge,
+  .phone-glass,
+  .phone-screen { corner-shape: squircle; }
+}
+
+/* Plates stacked behind the front face give the body a side wall when it turns. One plate alone
+   leaves a hollow you can see straight through. They switch off entirely on a phone that is
+   facing you, which has no visible side: left on, they land in the same plane as the front face
+   and, being later in the DOM, paint over the rail. */
 .phone-edge {
+  display: var(--edge);
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  transform: translateZ(var(--z));
-  background: linear-gradient(90deg, #5F5C57, #3B3936 55%, #6B6862);
+  transform: translateZ(calc(var(--depth) * var(--z) * -1));
+  background: linear-gradient(90deg, #A29E95, #625F57 38%, #55524B 62%, #918D84);
+}
+
+/* The black border between the rail and the display. Leaving this out is the single thing that
+   makes a CSS phone look like a screenshot with rounded corners. */
+.phone-glass {
+  position: relative;
+  padding: 1.98%;
+  border-radius: 15.5% / 7.3%;
+  background: #06070B;
+  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.16),   /* cover glass meeting the rail */
+              inset 0 1px 1px rgba(255, 255, 255, 0.10);
 }
 
 .phone-screen {
   position: relative;
   overflow: hidden;
-  border-radius: 10.6% / 4.9%;
-  background: #05070A;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.55);
+  border-radius: 14.1% / 6.5%;
+  background: #000;
 }
 .phone-screen img { display: block; width: 100%; height: auto; }
 
@@ -289,41 +332,65 @@ p:last-child { margin-bottom: 0; }
   aspect-ratio: 125 / 36;
   transform: translateX(-50%);
   border-radius: 999px;
-  background: #05070A;
+  background: #000;
 }
 
-/* One soft band across the glass, at the angle the body is turned. Kept under 20% alpha: a
-   convincing reflection on a screenshot is one you have to look for. */
+/* One soft band across the glass at the angle the body is turned, plus a darker edge where the
+   display sits under the cover glass. Kept low: a convincing reflection is one you have to look
+   for. */
 .phone-glare {
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
   background: linear-gradient(104deg,
-    rgba(255, 255, 255, 0.30) 0%,
-    rgba(255, 255, 255, 0.09) 15%,
-    rgba(255, 255, 255, 0) 31%,
-    rgba(255, 255, 255, 0) 63%,
-    rgba(255, 255, 255, 0.11) 76%,
-    rgba(255, 255, 255, 0) 90%);
+    rgba(255, 255, 255, 0.26) 0%,
+    rgba(255, 255, 255, 0.08) 14%,
+    rgba(255, 255, 255, 0) 29%,
+    rgba(255, 255, 255, 0) 64%,
+    rgba(255, 255, 255, 0.10) 77%,
+    rgba(255, 255, 255, 0) 91%);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.22);
 }
 
-.phone-button {
+/* Both key clusters are one element each, carved into buttons by hard gradient stops. Action,
+   volume up and volume down down the left; power and camera control on the right. */
+.phone-keys,
+.phone-power {
   position: absolute;
-  width: 0.9%;
+  width: 1.5%;
   border-radius: 2px;
-  background: linear-gradient(180deg, #8E8A84, #56534E);
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.28);
 }
-.phone-button.left  { left: -0.5%; }
-.phone-button.right { right: -0.5%; }
+.phone-keys {
+  left: -0.72%;
+  top: 19.6%;
+  height: 18.6%;
+  background: linear-gradient(180deg,
+    #A6A29A 0 18.3%, transparent 18.3% 32.3%,
+    #A6A29A 32.3% 62.4%, transparent 62.4% 69.9%,
+    #A6A29A 69.9% 100%);
+}
+.phone-power {
+  right: -0.72%;
+  top: 25.5%;
+  height: 19.1%;
+  background: linear-gradient(180deg,
+    #A6A29A 0 43.5%, transparent 43.5% 81.2%,
+    #C2BEB6 81.2% 100%);
+}
 
 /* The tilt is a flourish, and a flourish that costs legibility on a 390px screen is not worth
-   keeping. Below the breakpoint the phone straightens up. */
+   keeping. Toward the narrow end the phones straighten up. */
 @media (max-width: 899px) {
-  .phone { --ry: -9deg; --rx: 3deg; --rz: 0.8deg; --depth: 10px; margin: 0 auto; }
+  .phone { margin: 0 auto; }
+  .phone.near-left { --ry: -9deg; --rx: 3deg; --rz: 0.8deg; --depth: 10px; }
+  .phone.near-right  { --ry:  9deg; --rx: 3deg; --rz: -0.8deg; --depth: 10px; }
 }
 @media (max-width: 560px) {
-  .phone { --ry: -7deg; --rx: 2deg; --rz: 0.5deg; --depth: 8px; max-width: 300px; }
+  .phone { max-width: 300px; }
+  .phone.near-left { --ry: -6deg; --rx: 2deg; --rz: 0.5deg; --depth: 7px; }
+  .phone.near-right  { --ry:  6deg; --rx: 2deg; --rz: -0.5deg; --depth: 7px; }
 }
 
 /* ---- The episode strip ----------------------------------------------- */
@@ -373,7 +440,6 @@ p:last-child { margin-bottom: 0; }
   .feature { grid-template-columns: minmax(0, 1fr) 330px; gap: 80px; padding: 96px 0; }
   .feature.flip { grid-template-columns: 330px minmax(0, 1fr); }
   .feature.flip .feature-text { order: 2; }
-  .feature.flip .phone { --ry: 15deg; --rz: -1.2deg; }
 }
 .feature-text p { color: var(--fg-2); font-size: 17px; max-width: 34rem; }
 .feature-text h2 { margin-bottom: 16px; }
@@ -385,6 +451,37 @@ p:last-child { margin-bottom: 0; }
   font-size: 15px;
   color: var(--fg-2);
   max-width: 34rem;
+}
+
+/* ---- The lineup ------------------------------------------------------ */
+
+/* Three at once, for the screens that need a caption rather than a paragraph. The outer two turn
+   inward so the row reads as a group and the middle one is the one facing you. */
+.lineup { padding: 78px 0 8px; }
+.lineup > .narrow { margin-bottom: 52px; }
+.lineup-grid { display: grid; gap: 52px 30px; }
+@media (min-width: 780px) { .lineup-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.lineup figure { margin: 0; }
+.lineup .phone { max-width: 278px; }
+@media (min-width: 780px) {
+  .lineup figure:first-child .phone  { --ry:  12deg; --rx: 4deg; --rz: -0.9deg; --depth: 13px; --edge: block; }
+  .lineup figure:last-child .phone   { --ry: -12deg; --rx: 4deg; --rz:  0.9deg; --depth: 13px; --edge: block; }
+}
+
+.lineup figcaption {
+  margin-top: 26px;
+  font-size: 15.5px;
+  color: var(--fg-2);
+  line-height: 1.5;
+}
+.lineup figcaption b {
+  display: block;
+  color: var(--fg);
+  font-weight: 650;
+  font-size: 17px;
+  letter-spacing: -0.012em;
+  margin-bottom: 4px;
 }
 
 /* ---- Does / doesn't -------------------------------------------------- */

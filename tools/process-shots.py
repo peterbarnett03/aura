@@ -38,6 +38,8 @@ WANTED = {
     "07-insights-weather.png": "weather",
     "04-insights-patterns.png": "patterns",
     "08-doctor-mode.png": "doctor",
+    "06-research.png": "research",
+    "03-insights.png": "notices",
 }
 
 # 1x and 2x for a phone whose screen renders at up to about 350 CSS pixels wide.
