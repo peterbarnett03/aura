@@ -3,9 +3,10 @@
 
     ./tools/process-shots.py [source-directory]
 
-Source defaults to `../aura-ios/build/screenshots`, which is what `Tools/screenshots.sh` writes.
-Nothing here retouches the app's pixels: frames are resized and re-encoded, and that is all. If a
-number in one of these looks wrong, it is wrong in the app — fix it there and recapture.
+Source defaults to `../aura-ios/build/screenshots-dark`, which is what `Tools/screenshots.sh
+--dark` writes. Nothing here retouches the app's pixels: frames are resized and re-encoded, and
+that is all. If a number in one of these looks wrong, it is wrong in the app — fix it there and
+recapture.
 
 The site draws its own iPhone around each of these in CSS, so what goes out is the screen and
 nothing else: no bezel, no rounded corners, no shadow. Baking any of that in would fight the
@@ -16,9 +17,16 @@ page someone opens on a phone, quite possibly to read the privacy policy before 
 anything. WebP at quality 80 lands the whole set in the low hundreds of kilobytes with no visible
 loss on flat UI.
 
-Only the light frames are used. Aura is a light product and the screenshots sit comfortably on
-either page ground; carrying a dark set as well would double the assets to serve a case nobody
-has asked for.
+The dark frames are the ones used, and the light set is now the one nobody asks for. That is a
+reversal, and the app is why: the redesign made a drifting mesh gradient the page background of
+every screen rather than a light neutral, and a saturated field is a thing that dark rendering
+serves and light rendering flattens. The same screen that read as a white card stack now reads as
+lit glass.
+
+It also fixes what carrying one appearance always cost here. A light screenshot inside the dark
+graphite iPhone the page draws is a bright rectangle in a dark frame — the frame reads as a
+border. A dark screen reads as a phone that is switched on, which is what the CSS device was
+built to look like, and it holds on both page grounds instead of only the light one.
 """
 
 import pathlib
@@ -28,7 +36,7 @@ import sys
 from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-DEFAULT_SOURCE = ROOT.parent / "aura-ios" / "build" / "screenshots"
+DEFAULT_SOURCE = ROOT.parent / "aura-ios" / "build" / "screenshots-dark"
 OUT = ROOT / "shots"
 
 # The frames the site actually shows, with the name each gets on the web.

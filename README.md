@@ -7,7 +7,7 @@ no dependencies. `.nojekyll` disables Jekyll processing; pushing to `main` publi
 
 ```sh
 python3 -m http.server 8000   # local preview
-./tools/process-shots.py      # regenerate shots/ from the app's captures (needs Pillow)
+./tools/process-shots.py      # regenerate shots/ from the app's dark captures (needs Pillow)
 ```
 
 Verifying a change means loading the three pages at 390px, ~900px and desktop, in both colour
@@ -19,12 +19,17 @@ widen it carelessly and the page starts scrolling sideways on a phone.
 
 `.phone` in `style.css` builds the device out of CSS 3D: a rail, three stacked plates behind the
 front face so the body has a side wall when it turns, the screen, the Dynamic Island, and one soft
-band of glare. Proportions are the iPhone 16 Pro Max's, which is the device `shots/` was captured
-on, so the screenshot inside it is the app's own pixels with nothing done to them.
+band of glare. Proportions are the 6.9" iPhone's — the 1320 × 2868 screen `shots/` is captured at,
+whichever simulator of that size the capture script picks — so the screenshot inside it is the
+app's own pixels with nothing done to them.
 
 Rotation is per instance through `--ry` / `--rx` / `--rz`, and drops toward flat at the two
 breakpoints. `tools/process-shots.py` must keep emitting bare screens: a baked-in bezel or corner
 radius would double up on the frame the page draws.
+
+The frames are dark, which is what the graphite body was drawn for: a lit screen in a dark frame
+reads as a phone that is on, where a light one reads as a bright rectangle with a border around
+it. See `tools/process-shots.py` for the rest of that argument.
 
 ## The app icon
 
@@ -59,6 +64,13 @@ The sibling checkout `../aura-ios` owns everything this site describes.
 - **Screenshots.** Captured by `aura-ios/Tools/screenshots.sh`, which drives the real app through a
   UI test against a fixed fixture. `tools/process-shots.py` only resizes and re-encodes. Nothing is
   retouched: if a number in a screenshot looks wrong, it is wrong in the app.
+
+  The fixture is fixed to the *day*, not to the minute, so three things in the alt text move with
+  when the capture ran rather than with the app, and have to be re-read every time: the flare's age
+  on `today` (it starts at 07:30 local, so it reads however far past that the run was), the dose
+  times on `medications`, and the report period start on `doctor` (90 days back from the capture
+  date). The featured paper on `research` and `today` comes from a live PubMed query and can change
+  outright.
 
 Claims on `index.html` and `support.html` are product claims. Check them against the app before
 writing new ones — this app was rejected twice under guideline 5.1.1, and the copy here has to stay
