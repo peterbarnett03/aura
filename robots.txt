@@ -1,0 +1,7 @@
+# Three hand-written pages and their assets. Everything is public and everything is
+# indexable; this file exists to say so explicitly and to point at the sitemap, not to
+# hide anything.
+User-agent: *
+Allow: /
+
+Sitemap: https://peterbarnett03.github.io/aura/sitemap.xml

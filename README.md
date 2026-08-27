@@ -2,8 +2,11 @@
 
 The marketing, privacy and support site for the Aura iPhone app, served by GitHub Pages from
 `main` at the repo root. Four hand-written files — `index.html`, `privacy.html`, `support.html`,
-`style.css` — plus generated screenshots in `shots/`. No build step, no framework, no JavaScript,
-no dependencies. `.nojekyll` disables Jekyll processing; pushing to `main` publishes.
+`style.css` — plus `robots.txt`, `sitemap.xml` and generated screenshots in `shots/`. No build
+step, no framework, no JavaScript, no dependencies. `.nojekyll` disables Jekyll processing;
+pushing to `main` publishes.
+
+The app is live: <https://apps.apple.com/us/app/aura-palindromic-rheumatism/id6749520199>.
 
 ```sh
 python3 -m http.server 8000   # local preview
@@ -71,6 +74,18 @@ The sibling checkout `../aura-ios` owns everything this site describes.
   times on `medications`, and the report period start on `doctor` (90 days back from the capture
   date). The featured paper on `research` and `today` comes from a live PubMed query and can change
   outright.
+
+## Anything about the listing is a claim too
+
+The App Store link, the price, the platform and the minimum iOS version appear in the hero copy,
+in the `MobileApplication` structured data on `index.html`, and in the smart-app-banner `app-id`
+on all three pages. Every one of those was read off the live listing rather than assumed, and
+every one of them can change without this repo hearing about it — a paid tier, a raised
+deployment target, a renamed app. Re-read the listing before editing any of them, and do not add
+an `aggregateRating`: inventing one is the sort of thing the product itself refuses to do.
+
+`sitemap.xml` is written by hand because there are three pages and no build step. Move `lastmod`
+when a page's content changes, not when a typo is fixed.
 
 Claims on `index.html` and `support.html` are product claims. Check them against the app before
 writing new ones — this app was rejected twice under guideline 5.1.1, and the copy here has to stay

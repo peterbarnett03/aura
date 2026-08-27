@@ -7,12 +7,73 @@
 <meta name="description" content="How to get help with Aura, and answers to the questions that come up most.">
 <meta name="theme-color" content="#101215" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#FAF9F7" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="Support — Aura">
+<meta property="og:description" content="How to get help with Aura, and answers to the questions that come up most.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aura">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://peterbarnett03.github.io/aura/support.html">
+<meta property="og:image" content="https://peterbarnett03.github.io/aura/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Support — Aura">
+<meta name="twitter:description" content="How to get help with Aura, and answers to the questions that come up most.">
+<meta name="twitter:image" content="https://peterbarnett03.github.io/aura/assets/og.jpg">
 <!-- The tab icon is the app icon's dark appearance, not the light one in the header. At 16px
      the pale glass body dissolves into a light tab bar and leaves a stray orange dot; the dark
      appearance is the same logo and reads on either chrome. -->
 <link rel="icon" type="image/png" sizes="64x64" href="assets/icon-64.png">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
+<!-- Canonical on every page. GitHub Pages serves this site at both `/aura/` and
+     `/aura/index.html`, so the preferred URL is stated rather than inferred. -->
+<link rel="canonical" href="https://peterbarnett03.github.io/aura/support.html">
+<!-- Safari on iOS turns this into a native install banner, which is a better first-run than
+     any button this page could draw. -->
+<meta name="apple-itunes-app" content="app-id=6749520199">
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "My health data isn't showing up",
+      "acceptedAnswer": { "@type": "Answer", "text": "Aura only reads Apple Health if you allowed it, and iOS never tells an app which categories you granted \u2014 so the app cannot warn you that a particular one is switched off. Check Settings \u203a Privacy & Security \u203a Health \u203a Aura and confirm the categories you expect are on. If a category has no data in Health itself, nothing will appear here either." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the weather chart empty?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It needs location access, and it needs days. Aura records one weather reading each day you open the app, and the comparison only appears once several days have accumulated in more than one pressure band \u2014 because a flare rate with nothing to compare it against is not a comparison. Give it a couple of weeks." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why won't it show me a percentage?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Deliberately. Below about five flares, one more changes a percentage by tens of points, so the app shows plain counts instead and starts quoting proportions once there is a sample worth quoting. The same applies to the weather comparison and the trigger rankings." }
+    },
+    {
+      "@type": "Question",
+      "name": "My reminders aren't arriving",
+      "acceptedAnswer": { "@type": "Answer", "text": "Medication reminders are local notifications, so they need notification permission \u2014 Settings \u203a Notifications \u203a Aura. Check the dose times on the medication itself too: they default to sensible hours, but if you take a dose at 7pm and the schedule still says 9am, the reminder will follow the schedule." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I get my data out?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Profile \u203a Export Flare Data produces a PDF summary you can share or save. There is no cloud copy to request, because there is no cloud: everything is on the device." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I delete everything?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Profile \u203a Delete All Data erases every record permanently and immediately. Deleting the app removes its database with it. Nothing is held on a server, so there is no further request to make and nothing for anyone to delete on your behalf." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Aura a medical device?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. It does not diagnose, treat or prevent any condition, and nothing it displays is medical advice. It is a record of what you logged and a tally of what recurred. Decisions about your care belong with your clinician." }
+    }
+  ]
+}
+</script>
+
 </head>
 <body>
 
@@ -41,6 +102,7 @@
         <li>Email <a href="mailto:peter.barnett03@gmail.com">peter.barnett03@gmail.com</a> — bugs, questions, or a feature you need.</li>
         <li>Include your iOS version and what you were doing when it went wrong. It genuinely helps.</li>
         <li>Please don't send screenshots containing anything you would not want a stranger to read.</li>
+        <li>Updates ship through the <a href="https://apps.apple.com/us/app/aura-palindromic-rheumatism/id6749520199">App Store listing</a> — check there first if something has already been fixed.</li>
       </ul>
     </div>
 

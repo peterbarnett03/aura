@@ -4,20 +4,94 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aura — a flare tracker built for palindromic rheumatism</title>
-<meta name="description" content="A flare tracker for iPhone built around how palindromic rheumatism actually behaves. No account, no backend, and nothing you log leaves your phone.">
+<!-- Under 160 characters so it survives whole in a result, and it leads with the two words
+     someone actually searches — the condition, and that this is for iPhone. "Free on the App
+     Store" is here because it is now true and because it is the question the click is asking. -->
+<meta name="description" content="Free iPhone app for tracking palindromic rheumatism: log flares in under a minute, see which joints and triggers recur, and take a PDF to your rheumatologist. Nothing leaves your phone.">
+<meta name="author" content="Peter Barnett">
 <meta name="theme-color" content="#101215" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#FAF9F7" media="(prefers-color-scheme: light)">
-<meta property="og:title" content="Aura">
-<meta property="og:description" content="A flare tracker for iPhone built around how palindromic rheumatism actually behaves. No account, no backend, and nothing you log leaves your phone.">
+<meta property="og:title" content="Aura — a flare tracker built for palindromic rheumatism">
+<meta property="og:description" content="Free iPhone app for tracking palindromic rheumatism: log flares in under a minute, see which joints and triggers recur, and take a PDF to your rheumatologist. Nothing leaves your phone.">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Aura">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://peterbarnett03.github.io/aura/">
 <meta property="og:image" content="https://peterbarnett03.github.io/aura/assets/og.jpg">
+<meta property="og:image:alt" content="The Aura app icon beside an iPhone showing the Today screen with an active flare logged.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aura — a flare tracker built for palindromic rheumatism">
+<meta name="twitter:description" content="Free iPhone app for tracking palindromic rheumatism. Log flares in under a minute; nothing leaves your phone.">
+<meta name="twitter:image" content="https://peterbarnett03.github.io/aura/assets/og.jpg">
 <!-- The tab icon is the app icon's dark appearance, not the light one in the header. At 16px
      the pale glass body dissolves into a light tab bar and leaves a stray orange dot; the dark
      appearance is the same logo and reads on either chrome. -->
 <link rel="icon" type="image/png" sizes="64x64" href="assets/icon-64.png">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
+<!-- Canonical on every page. GitHub Pages serves this site at both `/aura/` and
+     `/aura/index.html`, and the hero screenshots make it the kind of page that gets scraped
+     and re-hosted, so the preferred URL is stated rather than inferred. -->
+<link rel="canonical" href="https://peterbarnett03.github.io/aura/">
+<!-- Safari on iOS turns this into a native install banner, which is a better first-run than
+     any button this page could draw. -->
+<meta name="apple-itunes-app" content="app-id=6749520199">
 <link rel="stylesheet" href="style.css">
+<!-- Structured data, so a result for "palindromic rheumatism app" can carry the price, the
+     platform and the rating rather than just a blue link. Every value here is checked against
+     the live App Store listing; nothing is aspirational, and there is no aggregateRating
+     because inventing one is the sort of thing this whole product refuses to do. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MobileApplication",
+      "@id": "https://peterbarnett03.github.io/aura/#app",
+      "name": "Aura - Palindromic Rheumatism",
+      "alternateName": "Aura",
+      "url": "https://peterbarnett03.github.io/aura/",
+      "installUrl": "https://apps.apple.com/us/app/aura-palindromic-rheumatism/id6749520199",
+      "sameAs": "https://apps.apple.com/us/app/aura-palindromic-rheumatism/id6749520199",
+      "applicationCategory": "HealthApplication",
+      "applicationSubCategory": "Health & Fitness",
+      "operatingSystem": "iOS 18.0 or later",
+      "image": "https://peterbarnett03.github.io/aura/assets/app-icon-256.webp",
+      "screenshot": [
+        "https://peterbarnett03.github.io/aura/shots/today.webp",
+        "https://peterbarnett03.github.io/aura/shots/patterns.webp",
+        "https://peterbarnett03.github.io/aura/shots/doctor.webp"
+      ],
+      "description": "A flare tracker for iPhone built around how palindromic rheumatism actually behaves. Flares arrive, move between joints and resolve completely; Aura is built around that rather than around a constant ache. All data stays on the device.",
+      "featureList": [
+        "Log a flare in under a minute: joints, pain, symmetry and suspected triggers",
+        "Rank the joints, triggers and symptoms that keep recurring",
+        "Compare flare days against days without a flare, including weather",
+        "Local medication reminders at your own dose times",
+        "Read-only Apple Health integration for sleep, heart rate, HRV and activity",
+        "PDF summaries for a rheumatology appointment",
+        "New palindromic rheumatism papers from PubMed Central"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "author": { "@type": "Person", "name": "Peter Barnett" },
+      "publisher": { "@type": "Person", "name": "Peter Barnett" },
+      "privacyPolicy": "https://peterbarnett03.github.io/aura/privacy.html"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://peterbarnett03.github.io/aura/#site",
+      "url": "https://peterbarnett03.github.io/aura/",
+      "name": "Aura",
+      "inLanguage": "en",
+      "about": { "@id": "https://peterbarnett03.github.io/aura/#app" }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -44,7 +118,13 @@
           rather than around a constant ache, so logging one takes under a minute and months of
           them add up to something you can show a rheumatologist.
         </p>
-        <p class="status"><span class="dot"></span> Coming to the App Store</p>
+        <p class="get">
+          <!-- Apple's marketing guidelines allow this exact wording as a text link where the
+               badge artwork is not used, and the badge is a black PNG that would be the only
+               raster chrome on a page that draws everything else itself. -->
+          <a class="app-store" href="https://apps.apple.com/us/app/aura-palindromic-rheumatism/id6749520199">Download on the App Store</a>
+        </p>
+        <p class="status"><span class="dot"></span> Out now &middot; Free &middot; iPhone, iOS 18 or later</p>
       </div>
 
       <div class="phone near-left">
@@ -368,6 +448,22 @@
       nothing it shows is medical advice. Any pattern it reports is descriptive only.
       <a href="privacy.html">Read the privacy policy</a>.
     </p>
+  </div>
+
+  <!-- The second way in. The first one is above the fold and is taken by people who already
+       know what they want; this one is for whoever has just finished reading the two columns
+       above and has stopped needing to be convinced. -->
+  <div class="wrap closer">
+    <div class="narrow">
+      <h2>On the App Store now.</h2>
+      <p class="muted">
+        Free, no account, and nothing to sign up for. Log the next one and the record starts
+        building itself.
+      </p>
+      <p class="get">
+        <a class="app-store" href="https://apps.apple.com/us/app/aura-palindromic-rheumatism/id6749520199">Download on the App Store</a>
+      </p>
+    </div>
   </div>
 
 </main>
