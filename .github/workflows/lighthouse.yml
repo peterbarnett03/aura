@@ -1,0 +1,21 @@
+# Audits every page with Lighthouse on each push and pull request. It does not deploy anything:
+# GitHub Pages still publishes main directly. A page that drops below the thresholds in
+# lighthouserc.json fails the check, which is the point — SEO here is mostly not breaking what
+# already works.
+name: Lighthouse
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: false

@@ -611,6 +611,86 @@ p:last-child { margin-bottom: 0; }
 
 .updated { font-size: 14px; color: var(--fg-2); margin: 0 0 38px; }
 
+/* ---- Guides ---------------------------------------------------------- */
+
+/* The guides are the pages someone finds before they have heard of the app: a search for the
+   condition, not for a tracker. They are document pages with three extra parts — a trail back
+   to the index, a comparison table, and a cited source list — and one quiet panel pointing at
+   the app, which has to read as an aside and never as the point of the page. */
+
+.crumbs { font-size: 14px; color: var(--fg-2); margin: 0 0 22px; }
+.crumbs a { color: var(--fg-2); }
+.crumbs a:hover { color: var(--fg); }
+
+.doc h3 { font-size: 1.02rem; margin: 28px 0 8px; }
+.doc ol { margin: 0 0 1.1rem; padding-left: 1.3rem; }
+.doc ol li { margin: 0.5rem 0; }
+
+/* A table that is wider than a phone scrolls inside its own box. The page itself never
+   scrolls sideways; see the note on .hero-glow. */
+.table-scroll { overflow-x: auto; margin: 0 0 1.4rem; border: 1px solid var(--line); border-radius: 14px; }
+.doc table { width: 100%; border-collapse: collapse; font-size: 15.5px; line-height: 1.45; }
+.doc th,
+.doc td { text-align: left; vertical-align: top; padding: 12px 16px; border-top: 1px solid var(--line); }
+.doc thead th { border-top: 0; background: var(--surface); font-weight: 650; }
+.doc tbody th { font-weight: 650; color: var(--fg-2); white-space: nowrap; }
+.compare { min-width: 560px; }
+
+.aside-app {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px 24px;
+  margin: 44px 0 0;
+}
+.aside-app .app-icon { width: 48px; height: 48px; flex: none; }
+.aside-app p { margin: 0 0 12px; color: var(--fg-2); font-size: 16px; }
+.aside-app p b { color: var(--fg); }
+.aside-app .app-store { font-size: 15px; padding: 10px 20px; }
+
+.sources { margin-top: 44px; border-top: 1px solid var(--line); padding-top: 8px; }
+.sources ol { font-size: 14.5px; color: var(--fg-2); }
+.sources li { margin: 0.6rem 0; }
+
+.guide-list { list-style: none; margin: 0; padding: 0; }
+.guide-list li { border-top: 1px solid var(--line); margin: 0; padding: 22px 0; }
+.guide-list li:first-child { border-top: 0; padding-top: 0; }
+.guide-list a { font-size: 1.15rem; font-weight: 650; letter-spacing: -0.012em; text-decoration: none; }
+.guide-list a:hover { text-decoration: underline; }
+.guide-list p { margin: 6px 0 0; color: var(--fg-2); font-size: 16px; }
+
+/* The links back into the guides from the landing page. */
+.learn { padding-block: 40px 56px; }
+.learn .guide-list { margin-top: 28px; }
+
+/* The printable flare diary. On screen it is a table like the others; printed, it is the only
+   thing on the paper, landscape where the browser supports named pages, in black on white
+   whatever theme the screen was in. */
+.sheet table { min-width: 760px; }
+.sheet td { height: 44px; }
+
+@page diary { size: landscape; margin: 12mm; }
+
+@media print {
+  :root {
+    --bg: #fff; --surface: #fff; --fg: #000; --fg-2: #333;
+    --line: #999; --line-2: #999; --accent: #000;
+  }
+  body { font-size: 11pt; }
+  .site-head, .site-foot, .aside-app { display: none; }
+  .doc { padding: 0; }
+  .print-sheet .doc .narrow > :not(.sheet) { display: none; }
+  .print-sheet .narrow { max-width: none; }
+  .sheet { page: diary; }
+  .sheet .table-scroll { overflow: visible; border-radius: 0; }
+  .sheet table { min-width: 0; font-size: 9.5pt; }
+  .sheet td { height: 34px; }
+  .sheet .screen-only { display: none; }
+}
+
 /* ---- Footer ---------------------------------------------------------- */
 
 .site-foot {

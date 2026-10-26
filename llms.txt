@@ -1,0 +1,20 @@
+# Aura
+
+> Aura is a free iPhone app (iOS 18 or later) for tracking palindromic rheumatism, a condition of sudden joint attacks that resolve completely. It logs a flare in under a minute (joints, pain, symmetry and suspected triggers), ranks the joints and triggers that recur, compares flare days with days without a flare (including weather), schedules local medication reminders, reads Apple Health data without writing to it, and produces PDF summaries for a rheumatology appointment. All data stays on the device: there is no account, server, analytics or advertising. Aura is not a medical device and does not diagnose, treat, predict flares or give medical advice. It is made by Peter Barnett.
+
+- App Store: https://apps.apple.com/us/app/aura-palindromic-rheumatism/id6749520199
+
+## Pages
+
+- [Home](https://peterbarnett03.github.io/aura/): what the app does and does not do
+- [Support](https://peterbarnett03.github.io/aura/support.html): common questions and contact
+- [Privacy policy](https://peterbarnett03.github.io/aura/privacy.html): what data the app handles and where it goes
+
+## Guides
+
+Sourced, general-information guides to the condition. Not medical advice.
+
+- [What is palindromic rheumatism?](https://peterbarnett03.github.io/aura/palindromic-rheumatism.html): attacks, joints, diagnosis, link to rheumatoid arthritis, treatment
+- [Palindromic rheumatism vs rheumatoid arthritis](https://peterbarnett03.github.io/aura/palindromic-rheumatism-vs-rheumatoid-arthritis.html): differences and progression rates
+- [How to keep a flare diary](https://peterbarnett03.github.io/aura/flare-diary.html): what to record, with a printable log sheet
+- [Preparing for a rheumatology appointment](https://peterbarnett03.github.io/aura/rheumatology-appointment.html): what to bring and questions to ask

@@ -1,10 +1,10 @@
 # Aura — companion site
 
 The marketing, privacy and support site for the Aura iPhone app, served by GitHub Pages from
-`main` at the repo root. Four hand-written files — `index.html`, `privacy.html`, `support.html`,
-`style.css` — plus `robots.txt`, `sitemap.xml` and generated screenshots in `shots/`. No build
-step, no framework, no JavaScript, no dependencies. `.nojekyll` disables Jekyll processing;
-pushing to `main` publishes.
+`main` at the repo root. Hand-written pages — `index.html`, `privacy.html`, `support.html`, and
+the guides (`guides.html` plus four articles) — share one `style.css`, alongside `robots.txt`,
+`sitemap.xml`, `llms.txt` and generated screenshots in `shots/`. No build step, no framework, no
+JavaScript, no dependencies. `.nojekyll` disables Jekyll processing; pushing to `main` publishes.
 
 The app is live: <https://apps.apple.com/us/app/aura-palindromic-rheumatism/id6749520199>.
 
@@ -84,9 +84,31 @@ every one of them can change without this repo hearing about it — a paid tier,
 deployment target, a renamed app. Re-read the listing before editing any of them, and do not add
 an `aggregateRating`: inventing one is the sort of thing the product itself refuses to do.
 
-`sitemap.xml` is written by hand because there are three pages and no build step. Move `lastmod`
+`sitemap.xml` and `llms.txt` are written by hand because there is no build step; add every new
+page to both. Move `lastmod`
 when a page's content changes, not when a typo is fixed.
 
 Claims on `index.html` and `support.html` are product claims. Check them against the app before
 writing new ones — this app was rejected twice under guideline 5.1.1, and the copy here has to stay
 consistent with the privacy label and the in-app wording.
+
+## The guides are for people who have not heard of the app
+
+`palindromic-rheumatism.html`, `palindromic-rheumatism-vs-rheumatoid-arthritis.html`,
+`flare-diary.html` and `rheumatology-appointment.html` exist to be found by someone searching for
+the condition, and `guides.html` indexes them. They are the site's search surface: the landing
+page can only rank for "palindromic rheumatism app", and almost nobody searches for that.
+
+Every figure on them is cited, by number, to a source at the foot of the page, and every source
+is a paper a rheumatologist would recognise. Keep it that way. A health page is judged on whether
+it can be trusted, and a number that cannot be traced is a reason not to. Each page carries an
+`Article` and `BreadcrumbList` in JSON-LD; bump `dateModified` there, the "Updated" line and the
+sitemap's `lastmod` together when the substance changes. The app panel on each page uses claims
+already made on `index.html`, so the rule above about product claims applies to it too.
+
+`flare-diary.html` has `class="print-sheet"` on `body`: printed, only the log sheet comes out, on
+a landscape page where the browser supports named `@page`s. Check a print preview after touching
+the print rules at the end of the guides section of `style.css`.
+
+`.github/workflows/lighthouse.yml` audits every page on each push (config in `lighthouserc.json`)
+and fails below 95 on SEO or accessibility. New pages go in its URL list.
